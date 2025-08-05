@@ -10,7 +10,7 @@ import random
 import datetime
 from typing import List, Dict, Any
 import os
-from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
 
 # Page configuration
 st.set_page_config(
@@ -336,42 +336,111 @@ def main():
     
     # Create tabs
     tabs = st.tabs([
+        "📝 Translator",
         "🧠 Quiz Mode", 
         "📚 Flashcards", 
         "🎯 Jargon Bingo", 
         "📖 Dictionary", 
         "🌟 Daily Challenge", 
-        "➕ Submit Term",
-        "📝 Translator"
+        "➕ Submit Term"
     ])
     
-    # Tab 1: Quiz Mode
+    # Tab 1: Translator Mode
     with tabs[0]:
+        translator_mode(terms)
+
+    # Tab 2: Quiz Mode
+    with tabs[1]:
         quiz_mode(terms)
     
-    # Tab 2: Flashcards
-    with tabs[1]:
+    # Tab 3: Flashcards
+    with tabs[2]:
         flashcards_mode(terms)
     
-    # Tab 3: Jargon Bingo
-    with tabs[2]:
+    # Tab 4: Jargon Bingo
+    with tabs[3]:
         jargon_bingo(terms)
     
-    # Tab 4: Dictionary
-    with tabs[3]:
+    # Tab 5: Dictionary
+    with tabs[4]:
         jargon_dictionary(terms)
     
-    # Tab 5: Daily Challenge
-    with tabs[4]:
+    # Tab 6: Daily Challenge
+    with tabs[5]:
         daily_challenge(terms)
     
-    # Tab 6: Submit Term
-    with tabs[5]:
-        submit_term()
-    
-    # Tab 7: Translator Mode
+    # Tab 7: Submit Term
     with tabs[6]:
-        translator_mode(terms)
+        submit_term()
+
+@st.cache_resource
+def load_llm():
+    """Load a model for jargon translation"""
+    model_name = "facebook/bart-base"
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+    return pipeline("text2text-generation", model=model, tokenizer=tokenizer)
+
+def translator_mode(terms):
+    st.header("📝 Jargon Translator")
+    st.write("Translate between plain text and corporate jargon using AI and our jargon database.")
+    
+    llm = load_llm()
+
+    # Collect jargon terms
+    known_terms = {t['term']: t['definition'] for t in terms}
+    try:
+        user_terms = load_user_submissions()
+        for _, row in user_terms.iterrows():
+            known_terms[row['term']] = row['definition']
+    except Exception:
+        pass
+
+    direction = st.radio("Select translation direction:", ["Plain ➡️ Jargon", "Jargon ➡️ Plain"])
+    user_input = st.text_area("Enter your text here:", placeholder="Type your sentence...")
+
+    if st.button("Translate", type="primary"):
+        if not user_input.strip():
+            st.error("Please enter some text to translate.")
+            return
+
+        # Build jargon hint string from dictionary
+        jargon_hints = ", ".join(random.sample(list(known_terms.keys()), min(8, len(known_terms)))) \
+                        if direction == "Plain ➡️ Jargon" and known_terms else ""
+
+        if direction == "Plain ➡️ Jargon":
+            prompt = (
+                f"""Translate the text into corporate consulting jargon.\n"""
+                # """Use these as a reference of some terms that can be used: {jargon_hints}.\n\n"""
+                f"Plain Text: {user_input}\n"
+            )
+            print(llm(prompt, max_new_tokens=60)[0]['generated_text'])
+        else:
+            prompt = (
+                f"""Translate the text into simple plain english\n"""
+                f"Jargon Text: {user_input}\n"
+            )
+
+        with st.spinner("Translating..."):
+            raw_response = llm(
+                prompt,
+                max_new_tokens=100,
+                do_sample=True,
+                temperature=0.9,
+                top_p=0.9,
+            )[0]['generated_text'].strip()
+            
+            response = raw_response.strip()
+
+        st.subheader("💡 Translation Result")
+        st.success(response)
+
+        # Show definitions of jargon terms used
+        matched_terms = [term for term in known_terms if term.lower() in response.lower()]
+        if matched_terms:
+            st.write("### 📘 Jargon Used in Translation")
+            for term in matched_terms:
+                st.write(f"**{term}**: {known_terms[term]}")
 
 def quiz_mode(terms):
     """Quiz mode implementation"""
@@ -875,80 +944,6 @@ def submit_term():
             st.info("No submissions yet. Be the first to contribute!")
     except Exception as e:
         st.info("No previous submissions found.")
-
-@st.cache_resource
-def load_llm():
-    """Load a GPT-2 model for jargon translation"""
-    model_name = "gpt2-medium"
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name)
-    return pipeline("text-generation", model=model, tokenizer=tokenizer)
-
-def translator_mode(terms):
-    st.header("📝 Jargon Translator")
-    st.write("Translate between plain text and corporate jargon using AI and our jargon database.")
-    
-    llm = load_llm()
-
-    # Collect jargon terms
-    known_terms = {t['term']: t['definition'] for t in terms}
-    try:
-        user_terms = load_user_submissions()
-        for _, row in user_terms.iterrows():
-            known_terms[row['term']] = row['definition']
-    except Exception:
-        pass
-
-    direction = st.radio("Select translation direction:", ["Plain ➡️ Jargon", "Jargon ➡️ Plain"])
-    user_input = st.text_area("Enter your text here:", placeholder="Type your sentence...")
-
-    if st.button("Translate", type="primary"):
-        if not user_input.strip():
-            st.error("Please enter some text to translate.")
-            return
-
-        # Build jargon hint string from dictionary
-        jargon_hints = ", ".join(random.sample(list(known_terms.keys()), min(8, len(known_terms)))) \
-                        if direction == "Plain ➡️ Jargon" and known_terms else ""
-
-        if direction == "Plain ➡️ Jargon":
-            prompt = (
-                f"You are a professional consultant. Rewrite the following plain English text "
-                f"into corporate consulting jargon. Try to naturally use some of these terms "
-                f"when relevant: {jargon_hints}.\n\n"
-                f"Plain Text: {user_input}\n\nCorporate Jargon Version:"
-            )
-        else:
-            prompt = (
-                f"You are a simplification assistant. Rewrite the following corporate jargon text "
-                f"into clear, plain English for a general audience.\n\n"
-                f"Jargon Text: {user_input}\n\nPlain English Version:"
-            )
-
-        with st.spinner("Translating..."):
-            raw_response = llm(
-                prompt,
-                max_new_tokens=120,
-                do_sample=True,
-                temperature=0.9,
-                top_p=0.95,
-            )[0]['generated_text']
-
-            # Extract only the generated part (after our marker)
-            if "Version:" in raw_response:
-                response = raw_response.split("Version:")[-1].strip()
-            else:
-                response = raw_response.strip()
-
-        st.subheader("💡 Translation Result")
-        st.success(response)
-
-        # Show definitions of jargon terms used
-        matched_terms = [term for term in known_terms if term.lower() in response.lower()]
-        if matched_terms:
-            st.write("### 📘 Jargon Used in Translation")
-            for term in matched_terms:
-                st.write(f"**{term}**: {known_terms[term]}")
 
 if __name__ == "__main__":
     main()
