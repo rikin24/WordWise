@@ -1,0 +1,17 @@
+{
+  "name": "consultingo-translator",
+  "version": "1.0.0",
+  "description": "Corporate jargon translator using Google Generative AI",
+  "main": "test.js",
+  "scripts": {
+    "start": "node test.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "csv-parser": "^3.0.0"
+  },
+  "keywords": ["corporate", "jargon", "translator", "ai"],
+  "author": "",
+  "license": "ISC"
+}
