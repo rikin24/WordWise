@@ -414,7 +414,6 @@ def translator_mode(terms):
                 # """Use these as a reference of some terms that can be used: {jargon_hints}.\n\n"""
                 f"Plain Text: {user_input}\n"
             )
-            print(llm(prompt, max_new_tokens=60)[0]['generated_text'])
         else:
             prompt = (
                 f"""Translate the text into simple plain english\n"""
