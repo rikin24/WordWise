@@ -1,0 +1,75 @@
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+
+function Navbar({ sidebarOpen, setSidebarOpen }) {
+  const location = useLocation();
+
+  const getPageTitle = () => {
+    switch (location.pathname) {
+      case '/': return 'Home';
+      case '/quiz': return 'Quiz Mode';
+      case '/flashcards': return 'Flashcards';
+      case '/bingo': return 'Jargon Bingo';
+      case '/dictionary': return 'Dictionary';
+      case '/challenge': return 'Daily Challenge';
+      case '/submit': return 'Submit Term';
+      default: return 'Consultingo';
+    }
+  };
+
+  return (
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="glass-card m-4 p-4 sticky top-4 z-50"
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="lg:hidden p-2 rounded-lg glass-card hover:bg-white/20 transition-colors"
+          >
+            {sidebarOpen ? (
+              <XMarkIcon className="h-6 w-6 text-white" />
+            ) : (
+              <Bars3Icon className="h-6 w-6 text-white" />
+            )}
+          </button>
+          
+          <Link to="/" className="flex items-center space-x-2">
+            <motion.div
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.5 }}
+              className="text-3xl"
+            >
+              🎯
+            </motion.div>
+            <h1 className="text-2xl font-bold text-white hidden sm:block">
+              Consultingo
+            </h1>
+          </Link>
+        </div>
+        
+        <div className="flex items-center space-x-4">
+          <h2 className="text-lg font-semibold text-white hidden md:block">
+            {getPageTitle()}
+          </h2>
+          
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="glass-card px-4 py-2 rounded-full"
+          >
+            <span className="text-white text-sm font-medium">
+              🚀 Level Up Your Jargon Game
+            </span>
+          </motion.div>
+        </div>
+      </div>
+    </motion.nav>
+  );
+}
+
+export default Navbar;

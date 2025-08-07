@@ -1,6 +1,0 @@
-streamlit
-pandas
-transformers
-torch
-google-generativeai
-google-auth

@@ -1,17 +1,53 @@
 {
-  "name": "consultingo-translator",
+  "name": "consultingo-react",
   "version": "1.0.0",
-  "description": "Corporate jargon translator using Google Generative AI",
-  "main": "test.js",
-  "scripts": {
-    "start": "node test.js",
-    "test": "node test.js"
-  },
+  "private": true,
   "dependencies": {
-    "@google/generative-ai": "^0.21.0",
-    "csv-parser": "^3.0.0"
+    "@google/generative-ai": "^0.24.1",
+    "@heroicons/react": "^2.0.10",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "autoprefixer": "^10.4.8",
+    "framer-motion": "^7.2.1",
+    "lucide-react": "^0.263.1",
+    "postcss": "^8.4.16",
+    "react": "^18.2.0",
+    "react-confetti": "^6.1.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
+    "tailwindcss": "^3.1.8",
+    "web-vitals": "^2.1.4"
   },
-  "keywords": ["corporate", "jargon", "translator", "ai"],
-  "author": "",
-  "license": "ISC"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.8",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8"
+  }
 }

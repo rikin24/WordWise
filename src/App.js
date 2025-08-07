@@ -1,0 +1,194 @@
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import toast, { Toaster } from 'react-hot-toast';
+import Confetti from 'react-confetti';
+
+// Components
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import Home from './components/Home';
+import QuizMode from './components/QuizMode';
+import Flashcards from './components/Flashcards';
+import JargonBingo from './components/JargonBingo';
+import Dictionary from './components/Dictionary';
+import DailyChallenge from './components/DailyChallenge';
+import SubmitTerm from './components/SubmitTerm';
+import LoadingScreen from './components/LoadingScreen';
+
+// Data
+import { jargonData } from './data/jargonData';
+
+// Context
+import { AppProvider } from './context/AppContext';
+
+function App() {
+  const [loading, setLoading] = useState(true);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    // Simulate loading time for splash screen
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleCelebration = () => {
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 3000);
+  };
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  return (
+    <AppProvider>
+      <Router>
+        <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
+          {showConfetti && (
+            <Confetti
+              width={window.innerWidth}
+              height={window.innerHeight}
+              recycle={false}
+              numberOfPieces={200}
+              gravity={0.3}
+            />
+          )}
+          
+          <Navbar 
+            sidebarOpen={sidebarOpen} 
+            setSidebarOpen={setSidebarOpen} 
+          />
+          
+          <div className="flex">
+            <Sidebar 
+              isOpen={sidebarOpen} 
+              setIsOpen={setSidebarOpen} 
+            />
+            
+            <main className={`flex-1 transition-all duration-300 ${
+              sidebarOpen ? 'ml-64' : 'ml-0'
+            } lg:ml-64`}>
+              <div className="p-4 lg:p-8">
+                <AnimatePresence mode="wait">
+                  <Routes>
+                    <Route 
+                      path="/" 
+                      element={
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <Home onCelebration={handleCelebration} />
+                        </motion.div>
+                      } 
+                    />
+                    <Route 
+                      path="/quiz" 
+                      element={
+                        <motion.div
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -20 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <QuizMode onCelebration={handleCelebration} />
+                        </motion.div>
+                      } 
+                    />
+                    <Route 
+                      path="/flashcards" 
+                      element={
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <Flashcards />
+                        </motion.div>
+                      } 
+                    />
+                    <Route 
+                      path="/bingo" 
+                      element={
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.9 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <JargonBingo onCelebration={handleCelebration} />
+                        </motion.div>
+                      } 
+                    />
+                    <Route 
+                      path="/dictionary" 
+                      element={
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <Dictionary />
+                        </motion.div>
+                      } 
+                    />
+                    <Route 
+                      path="/challenge" 
+                      element={
+                        <motion.div
+                          initial={{ opacity: 0, rotateY: 90 }}
+                          animate={{ opacity: 1, rotateY: 0 }}
+                          exit={{ opacity: 0, rotateY: -90 }}
+                          transition={{ duration: 0.4 }}
+                        >
+                          <DailyChallenge onCelebration={handleCelebration} />
+                        </motion.div>
+                      } 
+                    />
+                    <Route 
+                      path="/submit" 
+                      element={
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <SubmitTerm />
+                        </motion.div>
+                      } 
+                    />
+                  </Routes>
+                </AnimatePresence>
+              </div>
+            </main>
+          </div>
+          
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: 'rgba(255, 255, 255, 0.1)',
+                color: '#fff',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+              },
+            }}
+          />
+        </div>
+      </Router>
+    </AppProvider>
+  );
+}
+
+export default App;
