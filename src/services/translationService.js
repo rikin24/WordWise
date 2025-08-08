@@ -69,32 +69,39 @@ export const translateToPlain = async (jargonText) => {
     
     const model = genAI.getGenerativeModel({
       model: "gemini-2.0-flash-exp",
-      systemInstruction: `You are a translation engine that converts corporate consulting jargon into 
-      simple, plain English. Do not add any additional context or explanations. Only translate the 
-      provided sentences into clear, everyday language while maintaining the original meaning.
+      systemInstruction: `You are an expert at translating corporate jargon into natural, conversational English. 
+      Your goal is to make corporate speak sound like how real people actually talk in everyday conversations.
 
-      Reference the following terms to understand their meanings:
+      IMPORTANT GUIDELINES:
+      1. Keep the tone conversational and natural - like explaining to a friend
+      2. Maintain the original sentence structure when possible
+      3. Don't over-simplify - just remove the unnecessary jargon
+      4. Use common, everyday words that people actually use
+      5. Preserve the intent and urgency of the original message
+      6. Make it sound like something a normal person would say
 
+      Reference these jargon terms and their meanings:
       --- Terms ---
       ${context.combinedTermsText}
 
-      Convert complex corporate language into simple, understandable English that anyone can understand.
-      Replace jargon terms with their plain English equivalents:
-      - synergy → working together
-      - leverage → use
-      - optimize → improve
-      - facilitate → help
-      - deliverables → things to complete
-      - stakeholders → people involved
-      - alignment → agreement
-      - circle back → talk about later
-      - deep dive → detailed look
-      - move the needle → make progress
-      - bandwidth → time/capacity
-      - actionable insights → useful information`
+      TRANSLATION EXAMPLES:
+      Jargon: "Let's leverage synergy to optimize our deliverables and move the needle forward."
+      Natural: "Let's work together to improve our results and make real progress."
+
+      Jargon: "We need to circle back and do a deep dive to ensure alignment."
+      Natural: "We need to follow up and take a closer look to make sure we're all on the same page."
+
+      Jargon: "I don't have bandwidth to take on additional initiatives right now."
+      Natural: "I don't have time to take on any more projects right now."
+
+      Jargon: "Let's touch base to discuss actionable insights from our stakeholder analysis."
+      Natural: "Let's check in to talk about what we learned from talking to everyone involved."
+
+      Focus on making the translation sound like natural human speech, not a dictionary definition. Make sure the
+      response only contains the translated text without any additional explanations or context, or any speech marks.`
     });
     
-    const prompt = `Translate this corporate jargon into plain English: "${jargonText}"`;
+    const prompt = `Convert this corporate jargon into natural, conversational English that sounds like how real people talk: "${jargonText}"`;
     const result = await model.generateContent(prompt);
     const response = await result.response;
     
