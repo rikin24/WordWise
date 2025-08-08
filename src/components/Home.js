@@ -163,15 +163,20 @@ function Home({ onCelebration }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
         className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
-      >
-        {stats.map((stat, index) => (
+      >        {stats.map((stat, index) => (
           <motion.div
             key={stat.label}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.1 + 0.3, duration: 0.5 }}
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="glass-card p-6 rounded-2xl text-center card-hover"
+            whileHover={{ 
+              scale: 1.05, 
+              y: -5,
+              transition: { duration: 0.15 }
+            }}
+            whileTap={{ scale: 0.98 }}
+            style={{ transition: "all 0.15s ease-out" }}
+            className="glass-card p-6 rounded-2xl text-center"
           >
             <stat.icon className={`h-8 w-8 mx-auto mb-3 ${stat.color}`} />
             <p className="text-2xl md:text-3xl font-bold text-white mb-1">
@@ -188,15 +193,19 @@ function Home({ onCelebration }) {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.4 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-      >
-        {features.map((feature, index) => (
+      >        {features.map((feature, index) => (
           <motion.div
             key={feature.title}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 + 0.5, duration: 0.5 }}
-            whileHover={{ scale: 1.03, y: -5 }}
-            className="card-hover"
+            whileHover={{ 
+              scale: 1.03, 
+              y: -5,
+              transition: { duration: 0.15 }
+            }}
+            whileTap={{ scale: 0.98 }}
+            style={{ transition: "all 0.15s ease-out" }}
           >
             <Link to={feature.path}>
               <div className="glass-card p-6 rounded-2xl h-full">
@@ -212,9 +221,9 @@ function Home({ onCelebration }) {
                 <p className="text-white/70 mb-4">
                   {feature.description}
                 </p>
-                
-                <motion.div
+                  <motion.div
                   whileHover={{ x: 5 }}
+                  transition={{ duration: 0.15 }}
                   className={`inline-block bg-gradient-to-r ${feature.color} text-white px-4 py-2 rounded-lg font-semibold text-sm`}
                 >
                   Get Started →
