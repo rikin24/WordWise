@@ -3,46 +3,70 @@ import { jargonData } from '../data/jargonData';
 import { userSubmissionService } from './userSubmissionService';
 
 // Initialize Google Generative AI
-const genAI = new GoogleGenerativeAI("AIzaSyA2h30rLiYuSgzB13zJEwSpie1w3Wlyui8");
+const genAI = new GoogleGenerativeAI("AIzaSyDocyd09XQkgX2a7RypQwYk0_S_9Mzo9QI");
 
 // Prepare jargon context for AI
 const prepareJargonContext = () => {
-  // Official terms
-  const termsText = jargonData.terms
-    .map(item => `${item.term}: ${item.definition}`)
-    .join('\n');
-  
-  const acronymsText = jargonData.acronyms
-    ? jargonData.acronyms
-        .map(item => `${item.acronym}: ${item.full_name}`)
-        .join('\n')
-    : '';
-  
-  const examplesText = jargonData.terms
-    .filter(item => item.example)
-    .map(item => item.example)
-    .join('\n');
+  try {
+    // Official terms
+    const termsText = jargonData.terms
+      .map(item => `${item.term}: ${item.definition}`)
+      .join('\n');
+    
+    const acronymsText = jargonData.acronyms
+      ? jargonData.acronyms
+          .map(item => `${item.acronym}: ${item.full_name}`)
+          .join('\n')
+      : '';
+    
+    const examplesText = jargonData.terms
+      .filter(item => item.example)
+      .map(item => item.example)
+      .join('\n');
 
-  // User-submitted terms (approved only)
-  const userContext = userSubmissionService.getContextForTranslation();
-  const userTermsText = userContext.userTermsText || '';
-  const userAcronymsText = userContext.userAcronymsText || '';
-  
-  return {
-    termsText,
-    acronymsText,
-    examplesText,
-    userTermsText,
-    userAcronymsText,
-    combinedTermsText: [termsText, acronymsText, userTermsText, userAcronymsText]
-      .filter(text => text.trim().length > 0)
-      .join('\n')
-  };
+    // User-submitted terms (approved only) - with error handling
+    let userTermsText = '';
+    let userAcronymsText = '';
+    
+    try {
+      const userContext = userSubmissionService.getContextForTranslation();
+      userTermsText = userContext.userTermsText || '';
+      userAcronymsText = userContext.userAcronymsText || '';
+    } catch (userError) {
+      console.warn('Warning: Could not load user submissions for translation context:', userError);
+      // Continue without user submissions
+    }
+    
+    return {
+      termsText,
+      acronymsText,
+      examplesText,
+      userTermsText,
+      userAcronymsText,
+      combinedTermsText: [termsText, acronymsText, userTermsText, userAcronymsText]
+        .filter(text => text.trim().length > 0)
+        .join('\n')
+    };
+  } catch (error) {
+    console.error('Error preparing jargon context:', error);
+    // Return basic context if there's an error
+    return {
+      termsText: '',
+      acronymsText: '',
+      examplesText: '',
+      userTermsText: '',
+      userAcronymsText: '',
+      combinedTermsText: 'leverage, synergy, optimize, facilitate, deliverables, stakeholders, alignment'
+    };
+  }
 };
 
 export const translateToJargon = async (plainText) => {
   try {
+    console.log('Starting translation to jargon for:', plainText);
+    
     const context = prepareJargonContext();
+    console.log('Context prepared successfully');
     
     const model = genAI.getGenerativeModel({
       model: "gemini-2.0-flash-exp",
@@ -67,19 +91,32 @@ export const translateToJargon = async (plainText) => {
     });
     
     const prompt = `Translate this plain English into corporate consulting jargon: "${plainText}"`;
+    console.log('Sending prompt to AI...');
+    
     const result = await model.generateContent(prompt);
     const response = await result.response;
     
-    return response.text();
+    const translatedText = response.text();
+    console.log('Translation successful:', translatedText);
+    
+    return translatedText;
   } catch (error) {
     console.error('Translation to jargon failed:', error);
-    throw new Error('Failed to translate to corporate jargon. Please try again.');
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
+    throw new Error(`Failed to translate to corporate jargon: ${error.message}`);
   }
 };
 
 export const translateToPlain = async (jargonText) => {
   try {
+    console.log('Starting translation to plain English for:', jargonText);
+    
     const context = prepareJargonContext();
+    console.log('Context prepared successfully');
     
     const model = genAI.getGenerativeModel({
       model: "gemini-2.0-flash-exp",
@@ -116,12 +153,22 @@ export const translateToPlain = async (jargonText) => {
     });
     
     const prompt = `Convert this corporate jargon into natural, conversational English that sounds like how real people talk: "${jargonText}"`;
+    console.log('Sending prompt to AI...');
+    
     const result = await model.generateContent(prompt);
     const response = await result.response;
     
-    return response.text();
+    const translatedText = response.text();
+    console.log('Translation successful:', translatedText);
+    
+    return translatedText;
   } catch (error) {
     console.error('Translation to plain English failed:', error);
-    throw new Error('Failed to translate to plain English. Please try again.');
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
+    throw new Error(`Failed to translate to plain English: ${error.message}`);
   }
 };
