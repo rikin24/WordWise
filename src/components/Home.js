@@ -129,18 +129,31 @@ function Home({ onCelebration }) {
         
         <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto mb-8">
           Master corporate jargon like a pro! Transform confusing buzzwords into career-boosting knowledge with our gamified learning platform.
-        </p>
-        
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        </p>        <motion.div
+          whileHover={{ 
+            scale: 1.03,
+            y: -2,
+            rotateX: 3
+          }}
+          whileTap={{ scale: 0.97 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 400, 
+            damping: 15 
+          }}
         >
           <Link
-            to="/quiz"
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 neon-glow"
+            to="/flashcards"
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 hover:from-cyan-400 hover:via-blue-400 hover:to-teal-400 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-cyan-500/20 hover:shadow-3xl transition-all duration-400 neon-glow relative overflow-hidden group"
           >
-            <AcademicCapIcon className="h-6 w-6" />
-            <span>Start Learning Now</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+            <motion.div
+              whileHover={{ rotate: 10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <LanguageIcon className="h-6 w-6 relative z-10" />
+            </motion.div>
+            <span className="relative z-10">Try the Translator</span>
           </Link>
         </motion.div>
       </motion.div>
