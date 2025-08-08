@@ -51,21 +51,16 @@ function Navbar({ sidebarOpen, setSidebarOpen }) {
               Consultingo
             </h1>
           </Link>
-        </div>
-        
-        <div className="flex items-center space-x-4">
+        </div>        <div className="flex items-center space-x-4">
           <h2 className="text-lg font-semibold text-white hidden md:block">
             {getPageTitle()}
           </h2>
           
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="glass-card px-4 py-2 rounded-full"
-          >
-            <span className="text-white text-sm font-medium">
+          <div className="px-2">
+            <span className="text-white/60 text-xs font-medium tracking-wide">
               🚀 Level Up Your Jargon Game
             </span>
-          </motion.div>
+          </div>
         </div>
       </div>
     </motion.nav>
