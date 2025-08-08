@@ -43,19 +43,18 @@ function App() {
 
   if (loading) {
     return <LoadingScreen />;
-  }
-
-  return (
+  }  return (
     <AppProvider>
       <Router>
-        <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
+        <div className="min-h-screen h-full bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 w-full overflow-x-hidden relative">
           {showConfetti && (
             <Confetti
-              width={window.innerWidth}
-              height={window.innerHeight}
+              width={typeof window !== 'undefined' ? window.innerWidth : 1920}
+              height={typeof window !== 'undefined' ? window.innerHeight : 1080}
               recycle={false}
               numberOfPieces={200}
               gravity={0.3}
+              style={{ position: 'fixed', top: 0, left: 0, zIndex: 1000 }}
             />
           )}
           
