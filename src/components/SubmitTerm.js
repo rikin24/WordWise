@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PaperAirplaneIcon, CheckIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
+import { userSubmissionService } from '../services/userSubmissionService';
 
 function SubmitTerm() {
   const [formData, setFormData] = useState({
@@ -30,20 +31,30 @@ function SubmitTerm() {
     'Team',
     'Business',
     'Other'
-  ];
-
-  const handleSubmit = async (e) => {
+  ];  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     // Simulate submission delay
     await new Promise(resolve => setTimeout(resolve, 1500));
 
-    // Here you would typically send to a backend API
-    console.log('Submitted term:', formData);
+    // Use the user submission service
+    const submittedTerm = userSubmissionService.submitTerm({
+      term: formData.term,
+      definition: formData.definition,
+      example: formData.example,
+      category: formData.category,
+      funny_literal: formData.funnyLiteral
+    });
+
+    if (submittedTerm) {
+      console.log('Submitted term:', submittedTerm);
+      toast.success('🎉 Term submitted successfully!');
+      setIsSubmitted(true);
+    } else {
+      toast.error('❌ Failed to submit term. Please try again.');
+    }
     
-    toast.success('🎉 Term submitted successfully!');
-    setIsSubmitted(true);
     setIsSubmitting(false);
     
     // Reset form after a delay

@@ -1,11 +1,13 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { jargonData } from '../data/jargonData';
+import { userSubmissionService } from './userSubmissionService';
 
 // Initialize Google Generative AI
 const genAI = new GoogleGenerativeAI("AIzaSyA2h30rLiYuSgzB13zJEwSpie1w3Wlyui8");
 
 // Prepare jargon context for AI
 const prepareJargonContext = () => {
+  // Official terms
   const termsText = jargonData.terms
     .map(item => `${item.term}: ${item.definition}`)
     .join('\n');
@@ -20,12 +22,21 @@ const prepareJargonContext = () => {
     .filter(item => item.example)
     .map(item => item.example)
     .join('\n');
+
+  // User-submitted terms (approved only)
+  const userContext = userSubmissionService.getContextForTranslation();
+  const userTermsText = userContext.userTermsText || '';
+  const userAcronymsText = userContext.userAcronymsText || '';
   
   return {
     termsText,
     acronymsText,
     examplesText,
-    combinedTermsText: termsText + '\n' + acronymsText
+    userTermsText,
+    userAcronymsText,
+    combinedTermsText: [termsText, acronymsText, userTermsText, userAcronymsText]
+      .filter(text => text.trim().length > 0)
+      .join('\n')
   };
 };
 

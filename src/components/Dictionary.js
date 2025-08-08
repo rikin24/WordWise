@@ -2,27 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MagnifyingGlassIcon, FunnelIcon } from '@heroicons/react/24/outline';
 import { jargonData } from '../data/jargonData';
+import { userSubmissionService } from '../services/userSubmissionService';
 
-function Dictionary() {
-  const [searchTerm, setSearchTerm] = useState('');
+function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredTerms, setFilteredTerms] = useState([]);
+  const [filteredUserTerms, setFilteredUserTerms] = useState([]);
   const [currentView, setCurrentView] = useState('terms');
+  const [currentSection, setCurrentSection] = useState('official'); // 'official' or 'community'
+  const [userSubmissions, setUserSubmissions] = useState({ terms: [], acronyms: [] });
 
   const allTerms = jargonData.terms;
   const allAcronyms = jargonData.acronyms;
   
-  const categories = ['all', ...new Set(allTerms.map(term => term.category).filter(Boolean))];
-  const acronymCategories = ['all', ...new Set(allAcronyms.map(item => item.category).filter(Boolean))];
-
+  // Get user submissions on component mount and when view changes
+  useEffect(() => {
+    const submissions = userSubmissionService.getUserSubmissions();
+    setUserSubmissions(submissions);
+  }, [currentView]);
+  
+  const categories = ['all', ...new Set([
+    ...allTerms.map(term => term.category),
+    ...userSubmissions.terms.map(term => term.category)
+  ].filter(Boolean))];
+  
+  const acronymCategories = ['all', ...new Set([
+    ...allAcronyms.map(item => item.category),
+    ...userSubmissions.acronyms.map(item => item.category)
+  ].filter(Boolean))];
   useEffect(() => {
     filterItems();
-  }, [searchTerm, selectedCategory, currentView]);
-
-  const filterItems = () => {
-    const items = currentView === 'terms' ? allTerms : allAcronyms;
-    
-    let filtered = items.filter(item => {
+  }, [searchTerm, selectedCategory, currentView, currentSection, userSubmissions]);const filterItems = () => {
+    // Filter official items
+    const officialItems = currentView === 'terms' ? allTerms : allAcronyms;
+    const filteredOfficial = officialItems.filter(item => {
       const searchMatch = currentView === 'terms'
         ? item.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
           item.definition.toLowerCase().includes(searchTerm.toLowerCase())
@@ -34,11 +47,32 @@ function Dictionary() {
       return searchMatch && categoryMatch;
     });
 
-    setFilteredTerms(filtered);
-  };
+    // Filter user-submitted items
+    const userItems = currentView === 'terms' ? userSubmissions.terms : userSubmissions.acronyms;
+    const filteredUser = userItems.filter(item => {
+      const searchMatch = currentView === 'terms'
+        ? item.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.definition.toLowerCase().includes(searchTerm.toLowerCase())
+        : item.acronym.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.full_name.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
+      
+      return searchMatch && categoryMatch;
+    });
 
+    setFilteredTerms(filteredOfficial);
+    setFilteredUserTerms(filteredUser);
+  };
   const handleViewChange = (view) => {
     setCurrentView(view);
+    setCurrentSection('official'); // Reset to official section when changing view
+    setSearchTerm('');
+    setSelectedCategory('all');
+  };
+
+  const handleSectionChange = (section) => {
+    setCurrentSection(section);
     setSearchTerm('');
     setSelectedCategory('all');
   };
@@ -65,8 +99,7 @@ function Dictionary() {
         animate={{ opacity: 1, scale: 1 }}
         className="flex justify-center mb-8"
       >
-        <div className="glass-card p-2 rounded-xl flex space-x-2">
-          <button
+        <div className="glass-card p-2 rounded-xl flex space-x-2">          <button
             onClick={() => handleViewChange('terms')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
               currentView === 'terms'
@@ -74,7 +107,7 @@ function Dictionary() {
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
-            🔤 Terms ({allTerms.length})
+            🔤 Terms ({allTerms.length + userSubmissions.terms.length})
           </button>
           <button
             onClick={() => handleViewChange('acronyms')}
@@ -84,7 +117,36 @@ function Dictionary() {
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
-            🏢 Acronyms ({allAcronyms.length})
+            🏢 Acronyms ({allAcronyms.length + userSubmissions.acronyms.length})
+          </button>        </div>
+      </motion.div>
+
+      {/* Section Selector */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex justify-center mb-8"
+      >
+        <div className="glass-card p-2 rounded-xl flex space-x-2">
+          <button
+            onClick={() => handleSectionChange('official')}
+            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+              currentSection === 'official'
+                ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg'
+                : 'text-white/70 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            📚 Official ({currentView === 'terms' ? allTerms.length : allAcronyms.length})
+          </button>
+          <button
+            onClick={() => handleSectionChange('community')}
+            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+              currentSection === 'community'
+                ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg'
+                : 'text-white/70 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            👥 Community ({currentView === 'terms' ? userSubmissions.terms.length : userSubmissions.acronyms.length})
           </button>
         </div>
       </motion.div>
@@ -123,54 +185,83 @@ function Dictionary() {
               ))}
             </select>
           </div>
-        </div>
-
-        {/* Results Count */}
+        </div>        {/* Results Count */}
         <div className="mt-4 text-center">
           <span className="text-white/70 text-sm">
-            Showing {filteredTerms.length} of {currentView === 'terms' ? allTerms.length : allAcronyms.length} {currentView}
+            {currentSection === 'official' ? (
+              <>Showing {filteredTerms.length} of {currentView === 'terms' ? allTerms.length : allAcronyms.length} official {currentView}</>
+            ) : (
+              <>Showing {filteredUserTerms.length} of {currentView === 'terms' ? userSubmissions.terms.length : userSubmissions.acronyms.length} community {currentView}</>
+            )}
           </span>
         </div>
-      </motion.div>
-
-      {/* Results Grid */}
+      </motion.div>      {/* Results Grid */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
         className="grid gap-4"
       >
-        {filteredTerms.length === 0 ? (
+        {((currentSection === 'official' ? filteredTerms : filteredUserTerms).length === 0) ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             className="glass-card p-8 rounded-2xl text-center"
           >
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-bold text-white mb-2">No results found</h3>
+            <div className="text-6xl mb-4">
+              {currentSection === 'community' ? '👥' : '🔍'}
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2">
+              {currentSection === 'community' ? 'No community submissions yet' : 'No results found'}
+            </h3>
             <p className="text-white/70">
-              Try adjusting your search terms or category filter
+              {currentSection === 'community' 
+                ? 'Be the first to contribute! Visit the Submit Term page to add your own jargon.'
+                : 'Try adjusting your search terms or category filter'
+              }
             </p>
           </motion.div>
         ) : (
-          filteredTerms.map((item, index) => (
-            <motion.div
-              key={`${currentView}-${index}`}
+          (currentSection === 'official' ? filteredTerms : filteredUserTerms).map((item, index) => (            <motion.div
+              key={`${currentSection}-${currentView}-${index}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
               whileHover={{ scale: 1.02, y: -2 }}
-              className="glass-card p-6 rounded-2xl card-hover"
+              className={`glass-card p-6 rounded-2xl card-hover ${
+                currentSection === 'community' 
+                  ? 'border border-orange-500/30 bg-gradient-to-br from-orange-500/5 to-amber-500/5' 
+                  : ''
+              }`}
             >
               <div className="flex flex-col md:flex-row md:items-start gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-3">
+                <div className="flex-1">                  <div className="flex items-center gap-3 mb-3">
                     <h3 className="text-xl md:text-2xl font-bold text-white">
                       {currentView === 'terms' ? item.term : item.acronym}
                     </h3>
                     {item.category && (
                       <span className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-200 px-3 py-1 rounded-full text-sm border border-blue-500/30">
                         {item.category}
+                      </span>
+                    )}
+                    {currentSection === 'community' && (
+                      <span className="bg-gradient-to-r from-orange-500/20 to-amber-500/20 text-orange-200 px-3 py-1 rounded-full text-sm border border-orange-500/30 flex items-center gap-1">
+                        👥 Community
+                      </span>
+                    )}
+                    {currentSection === 'community' && item.status === 'pending' && (
+                      <span className="bg-gradient-to-r from-yellow-500/20 to-amber-500/20 text-yellow-200 px-3 py-1 rounded-full text-sm border border-yellow-500/30 flex items-center gap-1">
+                        ⏳ Pending
+                      </span>
+                    )}
+                    {currentSection === 'community' && item.status === 'approved' && (
+                      <span className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-200 px-3 py-1 rounded-full text-sm border border-green-500/30 flex items-center gap-1">
+                        ✅ Approved
+                      </span>
+                    )}
+                    {currentSection === 'community' && item.submittedDate && (
+                      <span className="bg-gradient-to-r from-gray-500/20 to-slate-500/20 text-gray-200 px-3 py-1 rounded-full text-sm border border-gray-500/30">
+                        📅 {item.submittedDate}
                       </span>
                     )}
                   </div>
@@ -215,9 +306,7 @@ function Dictionary() {
             </motion.div>
           ))
         )}
-      </motion.div>
-
-      {/* Footer Stats */}
+      </motion.div>      {/* Footer Stats */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -225,14 +314,22 @@ function Dictionary() {
         className="mt-12 glass-card p-6 rounded-2xl text-center"
       >
         <h3 className="text-lg font-bold text-white mb-4">📊 Dictionary Stats</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
           <div>
             <p className="text-2xl font-bold text-white">{allTerms.length}</p>
-            <p className="text-white/70 text-sm">Total Terms</p>
+            <p className="text-white/70 text-sm">Official Terms</p>
           </div>
           <div>
             <p className="text-2xl font-bold text-white">{allAcronyms.length}</p>
-            <p className="text-white/70 text-sm">Acronyms</p>
+            <p className="text-white/70 text-sm">Official Acronyms</p>
+          </div>
+          <div>
+            <p className="text-2xl font-bold text-green-400">{userSubmissions.terms.length}</p>
+            <p className="text-white/70 text-sm">Community Terms</p>
+          </div>
+          <div>
+            <p className="text-2xl font-bold text-green-400">{userSubmissions.acronyms.length}</p>
+            <p className="text-white/70 text-sm">Community Acronyms</p>
           </div>
           <div>
             <p className="text-2xl font-bold text-white">{categories.length - 1}</p>
@@ -240,7 +337,7 @@ function Dictionary() {
           </div>
           <div>
             <p className="text-2xl font-bold text-white">
-              {allTerms.filter(t => t.example).length}
+              {allTerms.filter(t => t.example).length + userSubmissions.terms.filter(t => t.example).length}
             </p>
             <p className="text-white/70 text-sm">With Examples</p>
           </div>

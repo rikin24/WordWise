@@ -15,6 +15,7 @@ import Dictionary from './components/Dictionary';
 import DailyChallenge from './components/DailyChallenge';
 import SubmitTerm from './components/SubmitTerm';
 import LoadingScreen from './components/LoadingScreen';
+import UserSubmissionTest from './components/UserSubmissionTest';
 
 // Data
 import { jargonData } from './data/jargonData';
@@ -151,8 +152,7 @@ function App() {
                           <DailyChallenge onCelebration={handleCelebration} />
                         </motion.div>
                       } 
-                    />
-                    <Route 
+                    />                    <Route 
                       path="/submit" 
                       element={
                         <motion.div
@@ -162,6 +162,19 @@ function App() {
                           transition={{ duration: 0.3 }}
                         >
                           <SubmitTerm />
+                        </motion.div>
+                      } 
+                    />
+                    <Route 
+                      path="/test-submissions" 
+                      element={
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <UserSubmissionTest />
                         </motion.div>
                       } 
                     />
