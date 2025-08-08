@@ -81,7 +81,7 @@ function Sidebar({ isOpen, setIsOpen }) {
             </div>
           </div>
 
-          {/* Stats */}
+          {/* Stats
           <div className="mb-6 space-y-3 flex-shrink-0">
             <motion.div
               whileHover={{ scale: 1.02 }}
@@ -140,7 +140,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                 {state.user.experience % 100}/100 XP
               </p>
             </motion.div>
-          </div>
+          </div> */}
 
           {/* Navigation */}
           <nav className="flex-1 overflow-y-auto min-h-0 sidebar-nav">

@@ -263,32 +263,58 @@ function Home({ onCelebration }) {
             </div>
           </div>
         </motion.div>
-      )}
-
-      {/* Welcome Message for New Users */}
-      {state.user.totalQuestions === 0 && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 1 }}
-          className="mt-12 glass-card p-8 rounded-2xl text-center"
+      )}      {/* Progress Celebration Section */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, delay: 1 }}
+        className="mt-12 glass-card p-8 rounded-2xl text-center"
+      >        {state.user.totalQuestions === 0 ? (
+          <>
+            <h2 className="text-2xl font-bold text-white mb-4">
+              🎉 Welcome to Consultingo!
+            </h2>
+            <p className="text-white/80 mb-6">
+              Ready to start your jargon mastery journey? Every correct answer earns XP and builds your streak. Let's celebrate the beginning of something great!
+            </p>
+          </>
+        ) : state.user.streak >= 5 ? (
+          <>
+            <h2 className="text-2xl font-bold text-white mb-4">
+              🔥 You're on Fire!
+            </h2>
+            <p className="text-white/80 mb-6">
+              Your {state.user.streak}-question streak shows serious dedication! That's {state.user.streak * 10} XP from pure consistency. This kind of progress deserves a celebration!
+            </p>
+          </>
+        ) : state.user.level >= 3 ? (
+          <>
+            <h2 className="text-2xl font-bold text-white mb-4">
+              🚀 Level {state.user.level} Achieved!
+            </h2>
+            <p className="text-white/80 mb-6">
+              You've crushed {state.user.totalQuestions} questions and earned {state.user.experience} XP! Reaching Level {state.user.level} is no small feat - time to celebrate this milestone!
+            </p>
+          </>
+        ) : (
+          <>
+            <h2 className="text-2xl font-bold text-white mb-4">
+              💪 Great Progress!
+            </h2>
+            <p className="text-white/80 mb-6">
+              {state.user.totalQuestions} questions down, {state.user.experience} XP earned! Every answer gets you closer to jargon mastery. Your learning journey is worth celebrating!
+            </p>
+          </>
+        )}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onCelebration}
+          className="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-3 rounded-xl font-semibold"
         >
-          <h2 className="text-2xl font-bold text-white mb-4">
-            🎉 Welcome to Consultingo!
-          </h2>
-          <p className="text-white/80 mb-6">
-            Ready to decode the mysterious world of corporate speak? Start with a quick quiz to see where you stand!
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={onCelebration}
-            className="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-3 rounded-xl font-semibold"
-          >
-            Let's Celebrate! 🎊
-          </motion.button>
-        </motion.div>
-      )}
+          Let's Celebrate! 🎊
+        </motion.button>
+      </motion.div>
     </div>
   );
 }
