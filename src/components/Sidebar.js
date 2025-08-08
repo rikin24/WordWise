@@ -32,7 +32,7 @@ function Sidebar({ isOpen, setIsOpen }) {
   }, []);  const menuItems = [
     { path: '/', name: 'Home', icon: HomeIcon },
     { path: '/quiz', name: 'Quiz Mode', icon: AcademicCapIcon },
-    { path: '/flashcards', name: 'Translator', icon: LanguageIcon },
+    { path: '/translator', name: 'Translator', icon: LanguageIcon },
     { path: '/bingo', name: 'Jargon Bingo', icon: CubeIcon },
     { path: '/dictionary', name: 'Dictionary', icon: BookmarkIcon },
     { path: '/challenge', name: 'Daily Challenge', icon: StarIcon },

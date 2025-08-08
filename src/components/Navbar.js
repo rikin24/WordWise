@@ -4,13 +4,11 @@ import { motion } from 'framer-motion';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 function Navbar({ sidebarOpen, setSidebarOpen }) {
-  const location = useLocation();
-
-  const getPageTitle = () => {
+  const location = useLocation();  const getPageTitle = () => {
     switch (location.pathname) {
       case '/': return 'Home';
       case '/quiz': return 'Quiz Mode';
-      case '/flashcards': return 'Flashcards';
+      case '/translator': return 'Translator';
       case '/bingo': return 'Jargon Bingo';
       case '/dictionary': return 'Dictionary';
       case '/challenge': return 'Daily Challenge';

@@ -9,7 +9,7 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Home from './components/Home';
 import QuizMode from './components/QuizMode';
-import Flashcards from './components/Flashcards';
+import Translator from './components/Translator';
 import JargonBingo from './components/JargonBingo';
 import Dictionary from './components/Dictionary';
 import DailyChallenge from './components/DailyChallenge';
@@ -100,9 +100,8 @@ function App() {
                           <QuizMode onCelebration={handleCelebration} />
                         </motion.div>
                       } 
-                    />
-                    <Route 
-                      path="/flashcards" 
+                    />                    <Route 
+                      path="/translator" 
                       element={
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
@@ -110,7 +109,7 @@ function App() {
                           exit={{ opacity: 0, y: -20 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <Flashcards />
+                          <Translator />
                         </motion.div>
                       } 
                     />

@@ -49,7 +49,10 @@ export const translateToJargon = async (plainText) => {
 
       Transform the input into sophisticated corporate consulting language while keeping the core message intact.
       Use terms like: leverage, synergy, optimize, facilitate, deliverables, stakeholders, alignment, 
-      circle back, deep dive, move the needle, bandwidth, actionable insights, etc.`
+      circle back, deep dive, move the needle, bandwidth, actionable insights, etc.
+      
+      Make sure the response only contains the translated text without any additional explanations or context, 
+      or any speech marks.`
     });
     
     const prompt = `Translate this plain English into corporate consulting jargon: "${plainText}"`;

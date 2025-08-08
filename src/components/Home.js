@@ -17,7 +17,6 @@ import { useApp } from '../context/AppContext';
 
 function Home({ onCelebration }) {
   const { state } = useApp();
-
   const features = [
     {
       title: 'Quiz Mode',
@@ -30,7 +29,7 @@ function Home({ onCelebration }) {
       title: 'Translator',
       description: 'Convert between corporate jargon and plain English',
       icon: LanguageIcon,
-      path: '/flashcards',
+      path: '/translator',
       color: 'from-green-500 to-green-700',
       emoji: '🔄'
     },
@@ -143,7 +142,7 @@ function Home({ onCelebration }) {
           }}
         >
           <Link
-            to="/flashcards"
+            to="/translator"
             className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 hover:from-cyan-400 hover:via-blue-400 hover:to-teal-400 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-cyan-500/20 hover:shadow-3xl transition-all duration-400 neon-glow relative overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
