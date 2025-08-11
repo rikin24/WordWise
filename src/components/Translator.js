@@ -95,7 +95,7 @@ function Translator() {
             onClick={() => setTranslationMode('toJargon')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 ${
               translationMode === 'toJargon'
-                ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg'
+                ? 'bg-gradient-to-r from-medium-blue to-dark-blue text-white shadow-lg'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -105,7 +105,7 @@ function Translator() {
             onClick={() => setTranslationMode('toPlain')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 ${
               translationMode === 'toPlain'
-                ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg'
+                ? 'bg-gradient-to-r from-medium-plum to-dark-plum text-white shadow-lg'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -144,7 +144,7 @@ function Translator() {
               whileTap={{ scale: 0.95 }}
               onClick={translateText}
               disabled={isLoading || !inputText.trim()}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+              className="bg-gradient-to-r from-medium-blue to-medium-plum text-white px-6 py-2 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
             >
               {isLoading ? (
                 <>

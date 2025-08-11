@@ -3,32 +3,56 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./public/index.html"
-  ],
-  theme: {
+  ],  theme: {
     extend: {
       colors: {
+        // Base colors
+        'midnight-blue': '#000048',
+        'white': '#FFFFFF',
+        
+        // Plum accents (Accent 1)
+        'dark-plum': '#2E308E',
+        'medium-plum': '#7373D8',
+        'light-plum': '#85A0F9',
+        
+        // Blue accents (Accent 2)
+        'dark-blue': '#2F78C4',
+        'medium-blue': '#6AA2DC',
+        'light-blue': '#92BBE6',
+        
+        // Teal accents (Accent 3)
+        'dark-teal': '#05819B',
+        'medium-teal': '#06C7CC',
+        'light-teal': '#26EFE9',
+        
+        // Grays (Secondary colors)
+        'dark-gray': '#53565A',
+        'medium-gray': '#97999B',
+        'light-gray': '#D0D0CE',
+        
+        // Legacy support for existing components
         primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
+          50: '#85A0F9',
+          100: '#7373D8',
+          200: '#6AA2DC',
+          300: '#2F78C4',
+          400: '#2E308E',
+          500: '#000048',
+          600: '#000048',
+          700: '#000048',
+          800: '#000048',
+          900: '#000048',
         },
         accent: {
-          50: '#fdf4ff',
-          100: '#fae8ff',
-          200: '#f5d0fe',
-          300: '#f0abfc',
-          400: '#e879f9',
-          500: '#d946ef',
-          600: '#c026d3',
-          700: '#a21caf',
-          800: '#86198f',
+          50: '#26EFE9',
+          100: '#06C7CC',
+          200: '#05819B',
+          300: '#05819B',
+          400: '#05819B',
+          500: '#05819B',
+          600: '#05819B',
+          700: '#05819B',
+          800: '#05819B',
           900: '#701a75',
         }
       },

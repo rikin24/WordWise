@@ -17,20 +17,19 @@ import { useApp } from '../context/AppContext';
 
 function Home({ onCelebration }) {
   const { state } = useApp();
-  const features = [
-    {
+  const features = [    {
       title: 'Quiz Mode',
       description: 'Test your knowledge with interactive quizzes',
       icon: AcademicCapIcon,
       path: '/quiz',
-      color: 'from-blue-500 to-blue-700',
+      color: 'from-medium-blue to-dark-blue',
       emoji: '🧠'
     },    {
       title: 'Translator',
       description: 'Convert between corporate jargon and plain English',
       icon: LanguageIcon,
       path: '/translator',
-      color: 'from-green-500 to-green-700',
+      color: 'from-medium-teal to-dark-teal',
       emoji: '🔄'
     },
     {
@@ -38,7 +37,7 @@ function Home({ onCelebration }) {
       description: 'Make meetings more fun with bingo',
       icon: CubeIcon,
       path: '/bingo',
-      color: 'from-purple-500 to-purple-700',
+      color: 'from-medium-plum to-dark-plum',
       emoji: '🎯'
     },
     {
@@ -46,15 +45,14 @@ function Home({ onCelebration }) {
       description: 'Browse all corporate terms',
       icon: BookmarkIcon,
       path: '/dictionary',
-      color: 'from-indigo-500 to-indigo-700',
+      color: 'from-light-plum to-medium-plum',
       emoji: '📖'
-    },
-    {
+    },    {
       title: 'Daily Challenge',
       description: 'Complete daily challenges for rewards',
       icon: StarIcon,
       path: '/challenge',
-      color: 'from-yellow-500 to-yellow-700',
+      color: 'from-light-teal to-medium-teal',
       emoji: '🌟'
     },
     {
@@ -62,39 +60,38 @@ function Home({ onCelebration }) {
       description: 'Contribute to the community',
       icon: PlusIcon,
       path: '/submit',
-      color: 'from-pink-500 to-pink-700',
+      color: 'from-light-blue to-medium-blue',
       emoji: '➕'
     }
   ];
-
   const stats = [
     {
       label: 'Quiz Accuracy',
       value: state.user.totalQuestions > 0 ? Math.round((state.user.score / state.user.totalQuestions) * 100) : 0,
       suffix: '%',
       icon: ChartBarIcon,
-      color: 'text-blue-400'
+      color: 'text-light-blue'
     },
     {
       label: 'Current Streak',
       value: state.user.streak,
       suffix: '',
       icon: FireIcon,
-      color: 'text-orange-400'
+      color: 'text-light-teal'
     },
     {
       label: 'Level',
       value: state.user.level,
       suffix: '',
       icon: TrophyIcon,
-      color: 'text-yellow-400'
+      color: 'text-light-plum'
     },
     {
       label: 'Experience',
       value: state.user.experience,
       suffix: ' XP',
       icon: RocketLaunchIcon,
-      color: 'text-purple-400'
+      color: 'text-medium-plum'
     }
   ];
 
@@ -143,7 +140,7 @@ function Home({ onCelebration }) {
         >
           <Link
             to="/translator"
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 hover:from-cyan-400 hover:via-blue-400 hover:to-teal-400 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-cyan-500/20 hover:shadow-3xl transition-all duration-400 neon-glow relative overflow-hidden group"
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-medium-teal via-dark-blue to-medium-blue hover:from-light-teal hover:via-medium-blue hover:to-light-blue text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-light-plum/20 hover:shadow-3xl transition-all duration-400 neon-glow relative overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
             <motion.div
@@ -255,7 +252,7 @@ function Home({ onCelebration }) {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1, duration: 0.3 }}
                   whileHover={{ scale: 1.1 }}
-                  className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900 px-4 py-2 rounded-full font-semibold text-sm shadow-lg"
+                  className="bg-gradient-to-r from-light-teal to-medium-teal text-white px-4 py-2 rounded-full font-semibold text-sm shadow-lg"
                 >
                   🏅 {achievement.replace('-', ' ').toUpperCase()}
                 </motion.div>
@@ -310,7 +307,7 @@ function Home({ onCelebration }) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onCelebration}
-          className="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-3 rounded-xl font-semibold"
+          className="bg-gradient-to-r from-light-plum to-medium-plum text-white px-6 py-3 rounded-xl font-semibold"
         >
           Let's Celebrate! 🎊
         </motion.button>

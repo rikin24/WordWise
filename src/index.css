@@ -24,9 +24,36 @@ html, body {
 
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #000048 0%, #2E308E 50%, #2F78C4 100%);
   min-height: 100vh;
   width: 100vw;
+}
+
+/* Custom color palette variables */
+:root {
+  /* Base colors */
+  --midnight-blue: #000048;
+  --white: #FFFFFF;
+  
+  /* Plum accents (Accent 1) */
+  --dark-plum: #2E308E;
+  --medium-plum: #7373D8;
+  --light-plum: #85A0F9;
+  
+  /* Blue accents (Accent 2) */
+  --dark-blue: #2F78C4;
+  --medium-blue: #6AA2DC;
+  --light-blue: #92BBE6;
+  
+  /* Teal accents (Accent 3) */
+  --dark-teal: #05819B;
+  --medium-teal: #06C7CC;
+  --light-teal: #26EFE9;
+  
+  /* Grays (Secondary colors) */
+  --dark-gray: #53565A;
+  --medium-gray: #97999B;
+  --light-gray: #D0D0CE;
 }
 
 @layer components {
@@ -45,9 +72,8 @@ body {
                  0 0 10px theme('colors.primary.400'),
                  0 0 15px theme('colors.primary.400');
   }
-  
-  .gradient-text {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    .gradient-text {
+    background: linear-gradient(135deg, #85A0F9 0%, #6AA2DC 50%, #26EFE9 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

@@ -65,21 +65,21 @@ function UserSubmissionTest() {
           <div className="space-y-4">
             <button
               onClick={addTestTerm}
-              className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+              className="w-full bg-gradient-to-r from-medium-teal to-dark-teal text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
             >
               Add Test Term
             </button>
             
             <button
               onClick={approveAllPending}
-              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+              className="w-full bg-gradient-to-r from-medium-blue to-dark-blue text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
             >
               Approve All Pending
             </button>
             
             <button
               onClick={loadSubmissions}
-              className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+              className="w-full bg-gradient-to-r from-medium-plum to-dark-plum text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
             >
               Refresh Data
             </button>

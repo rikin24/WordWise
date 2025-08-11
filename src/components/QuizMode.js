@@ -133,7 +133,7 @@ function QuizMode({ onCelebration }) {
             <motion.div
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
-              className="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4"
+              className="inline-block bg-gradient-to-r from-medium-blue to-medium-plum text-white px-4 py-2 rounded-full text-sm font-semibold mb-4"
             >
               Question {questionNumber}
             </motion.div>
@@ -164,9 +164,9 @@ function QuizMode({ onCelebration }) {
                 className={`w-full p-4 rounded-xl text-left transition-all duration-300 ${
                   showResult
                     ? option === currentQuestion.definition
-                      ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg'
+                      ? 'bg-gradient-to-r from-medium-teal to-dark-teal text-white shadow-lg'
                       : option === selectedAnswer && !isCorrect
-                      ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg'
+                      ? 'bg-gradient-to-r from-medium-gray to-dark-gray text-white shadow-lg'
                       : 'glass-card text-white/70'
                     : 'glass-card text-white hover:bg-white/20 cursor-pointer'
                 }`}
@@ -220,7 +220,7 @@ function QuizMode({ onCelebration }) {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={nextQuestion}
-                    className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-3 rounded-xl font-semibold inline-flex items-center space-x-2"
+                    className="bg-gradient-to-r from-medium-blue to-medium-plum text-white px-8 py-3 rounded-xl font-semibold inline-flex items-center space-x-2"
                   >
                     <ArrowPathIcon className="h-5 w-5" />
                     <span>Next Question</span>
@@ -248,7 +248,7 @@ function QuizMode({ onCelebration }) {
             initial={{ width: 0 }}
             animate={{ width: `${(state.user.experience % 100)}%` }}
             transition={{ duration: 1 }}
-            className="bg-gradient-to-r from-yellow-400 to-yellow-600 h-3 rounded-full"
+            className="bg-gradient-to-r from-light-teal to-medium-teal h-3 rounded-full"
           />
         </div>
         <p className="text-white/70 text-xs mt-2 text-center">

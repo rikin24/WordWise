@@ -210,12 +210,12 @@ function DailyChallenge({ onCelebration }) {
                       className={`w-full p-4 rounded-xl text-left transition-all duration-300 ${
                         showResult
                           ? option === todaysChallenge.definition
-                            ? 'bg-gradient-to-r from-green-500 to-green-600 text-white'
+                            ? 'bg-gradient-to-r from-medium-teal to-dark-teal text-white'
                             : option === userAnswer && !isCorrect
-                            ? 'bg-gradient-to-r from-red-500 to-red-600 text-white'
+                            ? 'bg-gradient-to-r from-medium-gray to-dark-gray text-white'
                             : 'glass-card text-white/50'
                           : userAnswer === option
-                          ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
+                          ? 'bg-gradient-to-r from-medium-blue to-dark-blue text-white'
                           : 'glass-card text-white hover:bg-white/20'
                       }`}
                     >

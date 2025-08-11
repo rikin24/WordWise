@@ -99,7 +99,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                   initial={{ width: 0 }}
                   animate={{ width: `${accuracy}%` }}
                   transition={{ duration: 1, delay: 0.5 }}
-                  className="bg-gradient-to-r from-blue-400 to-blue-600 h-2 rounded-full"
+                  className="bg-gradient-to-r from-light-blue to-medium-blue h-2 rounded-full"
                 />
               </div>
             </motion.div>
@@ -133,7 +133,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                   initial={{ width: 0 }}
                   animate={{ width: `${(state.user.experience % 100)}%` }}
                   transition={{ duration: 1, delay: 0.5 }}
-                  className="bg-gradient-to-r from-yellow-400 to-yellow-600 h-2 rounded-full"
+                  className="bg-gradient-to-r from-light-teal to-medium-teal h-2 rounded-full"
                 />
               </div>
               <p className="text-xs text-white/70 mt-1">
@@ -159,7 +159,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                       onClick={() => !isLargeScreen && setIsOpen(false)}
                       className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-200 ${
                         isActive
-                          ? 'bg-gradient-to-r from-blue-500/30 to-purple-500/30 text-white shadow-lg'
+                          ? 'bg-gradient-to-r from-medium-blue/30 to-medium-plum/30 text-white shadow-lg'
                           : 'text-white/70 hover:bg-white/10 hover:text-white'
                       }`}
                     >

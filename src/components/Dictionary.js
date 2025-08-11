@@ -103,7 +103,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
             onClick={() => handleViewChange('terms')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
               currentView === 'terms'
-                ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg'
+                ? 'bg-gradient-to-r from-medium-blue to-dark-blue text-white shadow-lg'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -113,7 +113,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
             onClick={() => handleViewChange('acronyms')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
               currentView === 'acronyms'
-                ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg'
+                ? 'bg-gradient-to-r from-medium-plum to-dark-plum text-white shadow-lg'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -132,7 +132,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
             onClick={() => handleSectionChange('official')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
               currentSection === 'official'
-                ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg'
+                ? 'bg-gradient-to-r from-medium-teal to-dark-teal text-white shadow-lg'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -142,7 +142,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
             onClick={() => handleSectionChange('community')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
               currentSection === 'community'
-                ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg'
+                ? 'bg-gradient-to-r from-light-blue to-medium-blue text-white shadow-lg'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -230,7 +230,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
               whileHover={{ scale: 1.02, y: -2 }}
               className={`glass-card p-6 rounded-2xl card-hover ${
                 currentSection === 'community' 
-                  ? 'border border-orange-500/30 bg-gradient-to-br from-orange-500/5 to-amber-500/5' 
+                  ? 'border border-light-blue/30 bg-gradient-to-br from-light-blue/5 to-medium-blue/5' 
                   : ''
               }`}
             >
@@ -245,7 +245,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
                       </span>
                     )}
                     {currentSection === 'community' && (
-                      <span className="bg-gradient-to-r from-orange-500/20 to-amber-500/20 text-orange-200 px-3 py-1 rounded-full text-sm border border-orange-500/30 flex items-center gap-1">
+                      <span className="bg-gradient-to-r from-light-blue/20 to-medium-blue/20 text-light-blue px-3 py-1 rounded-full text-sm border border-light-blue/30 flex items-center gap-1">
                         👥 Community
                       </span>
                     )}
@@ -255,7 +255,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
                       </span>
                     )}
                     {currentSection === 'community' && item.status === 'approved' && (
-                      <span className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-200 px-3 py-1 rounded-full text-sm border border-green-500/30 flex items-center gap-1">
+                      <span className="bg-gradient-to-r from-medium-teal/20 to-light-teal/20 text-light-teal px-3 py-1 rounded-full text-sm border border-medium-teal/30 flex items-center gap-1">
                         ✅ Approved
                       </span>
                     )}
@@ -293,7 +293,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold"
+                    className="bg-gradient-to-r from-medium-teal to-dark-teal text-white px-4 py-2 rounded-lg text-sm font-semibold"
                     onClick={() => {
                       navigator.clipboard.writeText(currentView === 'terms' ? item.term : `${item.acronym} - ${item.full_name}`);
                       // You could add a toast here

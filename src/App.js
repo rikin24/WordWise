@@ -48,7 +48,7 @@ function App() {
   }  return (
     <AppProvider>
       <Router>
-        <div className="min-h-screen h-full bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 w-full overflow-x-hidden relative">
+        <div className="min-h-screen h-full bg-gradient-to-br from-midnight-blue via-dark-plum to-dark-blue w-full overflow-x-hidden relative">
           {showConfetti && (
             <Confetti
               width={typeof window !== 'undefined' ? window.innerWidth : 1920}
@@ -196,16 +196,15 @@ function App() {
               </div>
             </main>
           </div>
-          
-          <Toaster
+            <Toaster
             position="top-right"
             toastOptions={{
               duration: 3000,
               style: {
-                background: 'rgba(255, 255, 255, 0.1)',
+                background: 'rgba(46, 48, 142, 0.9)',
                 color: '#fff',
                 backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
+                border: '1px solid rgba(133, 160, 249, 0.3)',
               },
             }}
           />

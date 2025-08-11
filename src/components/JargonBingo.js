@@ -159,7 +159,7 @@ function JargonBingo({ onCelebration }) {
           {['B', 'I', 'N', 'G', 'O'].map((letter, index) => (
             <div
               key={letter}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white text-2xl font-bold h-16 rounded-xl flex items-center justify-center"
+              className="bg-gradient-to-r from-medium-blue to-medium-plum text-white text-2xl font-bold h-16 rounded-xl flex items-center justify-center"
             >
               {letter}
             </div>
@@ -181,9 +181,9 @@ function JargonBingo({ onCelebration }) {
                 onClick={() => handleCellClick(cell.id)}
                 className={`h-16 p-2 rounded-xl font-semibold text-xs transition-all duration-300 ${
                   isWinning
-                    ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900 shadow-lg animate-pulse'
+                    ? 'bg-gradient-to-r from-light-teal to-medium-teal text-white shadow-lg animate-pulse'
                     : isSelected
-                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg'
+                    ? 'bg-gradient-to-r from-medium-teal to-dark-teal text-white shadow-lg'
                     : 'glass-card text-white hover:bg-white/20'
                 } ${cell.id === 12 ? 'cursor-default' : 'cursor-pointer'}`}
                 title={cell.definition}
@@ -210,7 +210,7 @@ function JargonBingo({ onCelebration }) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={resetBoard}
-          className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-3 rounded-xl font-semibold inline-flex items-center space-x-2 shadow-lg"
+          className="bg-gradient-to-r from-medium-blue to-medium-plum text-white px-8 py-3 rounded-xl font-semibold inline-flex items-center space-x-2 shadow-lg"
         >
           <ArrowPathIcon className="h-5 w-5" />
           <span>New Game</span>
