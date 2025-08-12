@@ -181,9 +181,9 @@ function JargonBingo({ onCelebration }) {
                 onClick={() => handleCellClick(cell.id)}
                 className={`h-16 p-2 rounded-xl font-semibold text-xs transition-all duration-300 ${
                   isWinning
-                    ? 'bg-gradient-to-r from-light-teal to-medium-teal text-white shadow-lg animate-pulse'
+                    ? 'bg-gradient-to-r from-medium-teal to-blue-400 text-white shadow-lg animate-pulse'
                     : isSelected
-                    ? 'bg-gradient-to-r from-medium-teal to-dark-teal text-white shadow-lg'
+                    ? 'bg-gradient-to-r from-light-blue to-medium-blue text-white shadow-lg'
                     : 'glass-card text-white hover:bg-white/20'
                 } ${cell.id === 12 ? 'cursor-default' : 'cursor-pointer'}`}
                 title={cell.definition}

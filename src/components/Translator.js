@@ -105,7 +105,7 @@ function Translator() {
             onClick={() => setTranslationMode('toPlain')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 ${
               translationMode === 'toPlain'
-                ? 'bg-gradient-to-r from-medium-plum to-dark-plum text-white shadow-lg'
+                ? 'bg-gradient-to-r from-light-plum to-medium-plum text-white shadow-lg'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -184,7 +184,7 @@ function Translator() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => copyToClipboard(outputText)}
-                className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center justify-center space-x-2"
+                className="flex-1 bg-dark-blue hover:bg-medium-blue text-white px-4 py-2 rounded-lg font-semibold flex items-center justify-center space-x-2"
               >
                 <ClipboardDocumentIcon className="h-4 w-4" />
                 <span>Copy</span>
@@ -193,7 +193,7 @@ function Translator() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => speakText(outputText)}
-                className="flex-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center justify-center space-x-2"
+                className="flex-1 bg-medium-teal hover:bg-light-teal text-white px-4 py-2 rounded-lg font-semibold flex items-center justify-center space-x-2"
               >
                 <SpeakerWaveIcon className="h-4 w-4" />
                 <span>Speak</span>

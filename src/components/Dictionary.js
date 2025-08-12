@@ -113,7 +113,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
             onClick={() => handleViewChange('acronyms')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
               currentView === 'acronyms'
-                ? 'bg-gradient-to-r from-medium-plum to-dark-plum text-white shadow-lg'
+                ? 'bg-gradient-to-r from-medium-plum to-blue-400 text-white shadow-lg'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -132,7 +132,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
             onClick={() => handleSectionChange('official')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
               currentSection === 'official'
-                ? 'bg-gradient-to-r from-medium-teal to-dark-teal text-white shadow-lg'
+                ? 'bg-gradient-to-r from-medium-teal to-blue-400 text-white shadow-lg'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -142,7 +142,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
             onClick={() => handleSectionChange('community')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
               currentSection === 'community'
-                ? 'bg-gradient-to-r from-light-blue to-medium-blue text-white shadow-lg'
+                ? 'bg-gradient-to-r from-medium-blue to-blue-400 text-white shadow-lg'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -293,7 +293,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-medium-teal to-dark-teal text-white px-4 py-2 rounded-lg text-sm font-semibold"
+                    className="bg-gradient-to-r from-medium-teal to-blue-400 text-white px-4 py-2 rounded-lg text-sm font-semibold"
                     onClick={() => {
                       navigator.clipboard.writeText(currentView === 'terms' ? item.term : `${item.acronym} - ${item.full_name}`);
                       // You could add a toast here
@@ -324,11 +324,11 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
             <p className="text-white/70 text-sm">Official Acronyms</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-green-400">{userSubmissions.terms.length}</p>
+            <p className="text-2xl font-bold text-teal-500">{userSubmissions.terms.length}</p>
             <p className="text-white/70 text-sm">Community Terms</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-green-400">{userSubmissions.acronyms.length}</p>
+            <p className="text-2xl font-bold text-teal-500">{userSubmissions.acronyms.length}</p>
             <p className="text-white/70 text-sm">Community Acronyms</p>
           </div>
           <div>

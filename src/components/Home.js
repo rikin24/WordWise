@@ -250,7 +250,7 @@ function Home({ onCelebration }) {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1, duration: 0.3 }}
                   whileHover={{ scale: 1.1 }}
-                  className="bg-gradient-to-r from-light-teal to-medium-teal text-white px-4 py-2 rounded-full font-semibold text-sm shadow-lg"
+                  className="bg-gradient-to-r from-blue-400 to-medium-teal text-white px-4 py-2 rounded-full font-semibold text-sm shadow-lg"
                 >
                   🏅 {achievement.replace('-', ' ').toUpperCase()}
                 </motion.div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { CheckIcon, XMarkIcon, FireIcon, CalendarIcon } from '@heroicons/react/24/outline';
+import { CheckIcon, XMarkIcon, FireIcon, CalendarIcon, ClockIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 import { useApp } from '../context/AppContext';
 import { jargonData } from '../data/jargonData';
@@ -129,7 +129,7 @@ function DailyChallenge({ onCelebration }) {
         className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
       >
         <div className="glass-card p-6 rounded-2xl text-center">
-          <FireIcon className="h-12 w-12 text-orange-400 mx-auto mb-3" />
+          <FireIcon className="h-12 w-12 text-light-teal mx-auto mb-3" />
           <p className="text-3xl font-bold text-white">{state.dailyChallenge.streak}</p>
           <p className="text-white/70">Day Streak</p>
         </div>
@@ -139,9 +139,9 @@ function DailyChallenge({ onCelebration }) {
             {isCompletedToday ? '✅' : '⏳'}
           </p>
           <p className="text-white/70">Today's Status</p>
-        </div>
-        <div className="glass-card p-6 rounded-2xl text-center">
-          <div className="text-3xl mb-3">⏰</div>
+        </div>        <div className="glass-card p-6 rounded-2xl text-center">
+          <ClockIcon className="h-12 w-12 text-light-plum mx-auto mb-3" />
+          {/* <div className="text-3xl mb-3">⏰</div> */}
           <p className="text-lg font-bold text-white">
             {timeUntilNext.hours}h {timeUntilNext.minutes}m
           </p>
@@ -182,11 +182,11 @@ function DailyChallenge({ onCelebration }) {
             // Active challenge
             <div>
               <div className="text-center mb-8">
-                <div className="inline-block bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                <div className="inline-block bg-gradient-to-r from-medium-teal to-blue-400 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
                   Daily Challenge #{new Date().getDate()}
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                  What does <span className="text-yellow-400">"{todaysChallenge.term}"</span> mean?
+                  What does <span className="text-medium-teal">"{todaysChallenge.term}"</span> mean?
                 </h2>
                 {todaysChallenge.category && (
                   <div className="inline-block bg-white/20 text-white px-3 py-1 rounded-full text-sm">
@@ -253,7 +253,7 @@ function DailyChallenge({ onCelebration }) {
                     whileTap={{ scale: 0.95 }}
                     onClick={handleSubmit}
                     disabled={!userAnswer.trim()}
-                    className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-8 py-3 rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-gradient-to-r from-medium-teal to-blue-400 text-white px-8 py-3 rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Submit Answer
                   </motion.button>

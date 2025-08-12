@@ -164,9 +164,9 @@ function QuizMode({ onCelebration }) {
                 className={`w-full p-4 rounded-xl text-left transition-all duration-300 ${
                   showResult
                     ? option === currentQuestion.definition
-                      ? 'bg-gradient-to-r from-medium-teal to-dark-teal text-white shadow-lg'
+                      ? 'bg-gradient-to-r from-blue-400 to-medium-teal text-white shadow-lg'
                       : option === selectedAnswer && !isCorrect
-                      ? 'bg-gradient-to-r from-medium-gray to-dark-gray text-white shadow-lg'
+                      ? 'bg-gradient-to-r from-gray-500 to-medium-gray text-white shadow-lg'
                       : 'glass-card text-white/70'
                     : 'glass-card text-white hover:bg-white/20 cursor-pointer'
                 }`}
@@ -195,7 +195,7 @@ function QuizMode({ onCelebration }) {
               >
                 <div className={`p-4 rounded-xl mb-4 ${
                   isCorrect 
-                    ? 'bg-green-500/20 border border-green-500/30' 
+                    ? 'bg-teal-500/20 border border-teal-500/30' 
                     : 'bg-red-500/20 border border-red-500/30'
                 }`}>
                   <p className="text-white font-semibold mb-2">

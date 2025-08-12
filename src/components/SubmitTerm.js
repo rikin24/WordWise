@@ -256,7 +256,7 @@ function SubmitTerm() {
               className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
                 isSubmitting
                   ? 'bg-gray-500 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-medium-teal to-dark-teal hover:shadow-lg'
+                  : 'bg-gradient-to-r from-medium-teal to-blue-400 hover:shadow-lg'
               } text-white flex items-center space-x-2`}
             >
               {isSubmitting ? (
