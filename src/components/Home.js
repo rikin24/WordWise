@@ -22,14 +22,14 @@ function Home({ onCelebration }) {
       description: 'Test your knowledge with interactive quizzes',
       icon: AcademicCapIcon,
       path: '/quiz',
-      color: 'from-medium-blue to-dark-blue',
+      color: 'from-medium-plum to-light-plum',
       emoji: '🧠'
     },    {
       title: 'Translator',
       description: 'Convert between corporate jargon and plain English',
       icon: LanguageIcon,
       path: '/translator',
-      color: 'from-medium-teal to-dark-teal',
+      color: 'from-medium-blue to-light-blue',
       emoji: '🔄'
     },
     {
@@ -37,7 +37,7 @@ function Home({ onCelebration }) {
       description: 'Make meetings more fun with bingo',
       icon: CubeIcon,
       path: '/bingo',
-      color: 'from-medium-plum to-dark-plum',
+      color: 'from-blue-400 to-medium-teal',
       emoji: '🎯'
     },
     {
@@ -45,14 +45,14 @@ function Home({ onCelebration }) {
       description: 'Browse all corporate terms',
       icon: BookmarkIcon,
       path: '/dictionary',
-      color: 'from-light-plum to-medium-plum',
+      color: 'from-medium-plum to-light-plum',
       emoji: '📖'
     },    {
       title: 'Daily Challenge',
       description: 'Complete daily challenges for rewards',
       icon: StarIcon,
       path: '/challenge',
-      color: 'from-light-teal to-medium-teal',
+      color: 'from-medium-blue to-light-blue',
       emoji: '🌟'
     },
     {
@@ -60,7 +60,7 @@ function Home({ onCelebration }) {
       description: 'Contribute to the community',
       icon: PlusIcon,
       path: '/submit',
-      color: 'from-light-blue to-medium-blue',
+      color: 'from-blue-400 to-medium-teal',
       emoji: '➕'
     }
   ];
@@ -70,7 +70,7 @@ function Home({ onCelebration }) {
       value: state.user.totalQuestions > 0 ? Math.round((state.user.score / state.user.totalQuestions) * 100) : 0,
       suffix: '%',
       icon: ChartBarIcon,
-      color: 'text-light-blue'
+      color: 'text-light-plum'
     },
     {
       label: 'Current Streak',
@@ -84,14 +84,14 @@ function Home({ onCelebration }) {
       value: state.user.level,
       suffix: '',
       icon: TrophyIcon,
-      color: 'text-light-plum'
+      color: 'text-light-blue'
     },
     {
       label: 'Experience',
       value: state.user.experience,
       suffix: ' XP',
       icon: RocketLaunchIcon,
-      color: 'text-medium-plum'
+      color: 'text-medium-gray'
     }
   ];
 
@@ -204,24 +204,22 @@ function Home({ onCelebration }) {
             whileTap={{ scale: 0.98 }}
             style={{ transition: "all 0.15s ease-out" }}
           >
-            <Link to={feature.path}>
-              <div className="glass-card p-6 rounded-2xl h-full">
+            <Link to={feature.path}>              <div className="glass-card p-6 rounded-2xl h-full flex flex-col">
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="text-3xl">{feature.emoji}</div>
-                  <feature.icon className="h-6 w-6 text-white" />
+                  {/* <feature.icon className="h-6 w-6 text-white" /> */}
                 </div>
                 
                 <h3 className="text-xl font-bold text-white mb-3">
                   {feature.title}
                 </h3>
                 
-                <p className="text-white/70 mb-4">
+                <p className="text-white/70 mb-4 flex-grow">
                   {feature.description}
-                </p>
-                  <motion.div
+                </p>                <motion.div
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.15 }}
-                  className={`inline-block bg-gradient-to-r ${feature.color} text-white px-4 py-2 rounded-lg font-semibold text-sm`}
+                  className={`inline-block bg-gradient-to-r ${feature.color} text-white px-4 py-2.5 rounded-lg font-semibold text-sm w-fit`}
                 >
                   Get Started →
                 </motion.div>
