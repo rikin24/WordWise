@@ -168,8 +168,9 @@ function Home({ onCelebration }) {
         </h1>
         
         <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto mb-8">
-          Master corporate jargon through quizzes, translation, bingo, and daily challenges. Level up, earn achievements, and contribute to the community!
-        </p><motion.div
+          Master corporate jargon through quizzes, translation, bingo, and daily challenges. Level up, earn achievements, and contribute to the community!        </p>
+
+        <motion.div
           whileHover={{ 
             scale: 1.03,
             y: -2,
@@ -181,6 +182,7 @@ function Home({ onCelebration }) {
             stiffness: 400, 
             damping: 15 
           }}
+          className="inline-block"
         >
           <Link
             to="/translator"
