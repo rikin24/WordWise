@@ -13,7 +13,7 @@ function LoadingScreen() {
           <div className="text-8xl mb-4">🎯</div>
           <div className="pb-2">
             <h1 className="text-6xl font-bold text-white mb-4 gradient-text" style={{ lineHeight: '1.3', paddingBottom: '8px' }}>
-              Consultingo
+              WordWise
             </h1>
           </div>
           <p className="text-xl text-white/80">

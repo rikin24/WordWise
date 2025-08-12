@@ -45,7 +45,7 @@ function Navbar({ sidebarOpen, setSidebarOpen }) {
               🎯
             </motion.div>            <h1 className="text-2xl font-bold hidden sm:block relative overflow-hidden group-hover:cursor-pointer">
               <span className="relative z-10 bg-gradient-to-r from-white via-white to-white bg-clip-text text-transparent group-hover:from-white group-hover:via-light-gray group-hover:to-white group-hover:bg-[length:200%_100%] group-hover:animate-shimmer transition-all duration-300">
-                Consultingo
+                WordWise
               </span>
             </h1>
           </Link>

@@ -78,7 +78,7 @@ function Sidebar({ isOpen, setIsOpen }) {
           <div className="flex items-center space-x-3 mb-8">
             <div className="text-3xl">🎯</div>
             <div>
-              <h2 className="text-xl font-bold text-white">Consultingo</h2>
+              <h2 className="text-xl font-bold text-white">WordWise</h2>
               <p className="text-sm text-white/70">Corporate Jargon Master</p>
             </div>
           </div>

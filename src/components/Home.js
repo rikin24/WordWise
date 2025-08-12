@@ -137,7 +137,7 @@ function Home({ onCelebration }) {
       value: state.user.experience,
       suffix: ' XP',
       icon: RocketLaunchIcon,
-      color: 'text-medium-gray'
+      color: 'text-blue-400'
     }
   ];
 
@@ -164,7 +164,7 @@ function Home({ onCelebration }) {
         >
           🎯
         </motion.div>        <h1 className="text-6xl md:text-8xl font-bold text-white mb-6">
-          <span className="gradient-text">Consultingo</span>
+          <span className="gradient-text">WordWise</span>
         </h1>
         
         <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto mb-8">
