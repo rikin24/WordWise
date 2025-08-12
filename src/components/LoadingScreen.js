@@ -47,7 +47,7 @@ function LoadingScreen() {
           initial={{ width: 0 }}
           animate={{ width: "100%" }}
           transition={{ delay: 1, duration: 1 }}
-          className="mt-8 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto max-w-xs"
+          className="mt-8 h-1 bg-gradient-to-r from-blue-400 to-medium-teal rounded-full mx-auto max-w-xs"
         />
       </div>
     </div>

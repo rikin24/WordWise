@@ -17,7 +17,53 @@ import { useApp } from '../context/AppContext';
 
 function Home({ onCelebration }) {
   const { state } = useApp();
-  const features = [    {
+    // Define all available achievements
+  const allAchievements = [
+    {
+      id: 'first-correct',
+      name: 'First Steps',
+      description: 'Answer your first question correctly',
+      emoji: '🎯',
+      requirement: 'Get 1 correct answer'
+    },
+    {
+      id: 'streak-5',
+      name: 'Getting Warmed Up',
+      description: 'Achieve a 5-question streak',
+      emoji: '🔥',
+      requirement: 'Reach 5 streak'
+    },
+    {
+      id: 'streak-10',
+      name: 'On Fire',
+      description: 'Achieve a 10-question streak',
+      emoji: '🚀',
+      requirement: 'Reach 10 streak'
+    },
+    {
+      id: 'level-5',
+      name: 'Rising Expert',
+      description: 'Reach Level 5',
+      emoji: '⭐',
+      requirement: 'Reach Level 5'
+    },
+    {
+      id: 'bingo-master',
+      name: 'Bingo Champion',
+      description: 'Win 3 bingo games',
+      emoji: '🏆',
+      requirement: 'Win 3 bingo games'
+    },
+    {
+      id: 'daily-warrior',
+      name: 'Daily Warrior',
+      description: 'Complete daily challenges for 7 days',
+      emoji: '⚔️',
+      requirement: 'Complete 7 daily challenges'
+    }
+  ];
+
+  const features = [{
       title: 'Quiz Mode',
       description: 'Test your knowledge with interactive quizzes',
       icon: AcademicCapIcon,
@@ -140,7 +186,7 @@ function Home({ onCelebration }) {
         >
           <Link
             to="/translator"
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-medium-teal via-dark-blue to-medium-blue hover:from-light-teal hover:via-medium-blue hover:to-light-blue text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-light-plum/20 hover:shadow-3xl transition-all duration-400 neon-glow relative overflow-hidden group"
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-medium-teal via-medium-blue to-dark-blue hover:from-light-teal hover:via-medium-blue hover:to-light-blue text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-light-plum/20 hover:shadow-3xl transition-all duration-400 neon-glow relative overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
             <motion.div
@@ -227,38 +273,81 @@ function Home({ onCelebration }) {
             </Link>
           </motion.div>
         ))}
-      </motion.div>
-
-      {/* Achievement Section */}
-      {state.user.achievements.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-12"
-        >
-          <h2 className="text-3xl font-bold text-white text-center mb-6">
-            🏆 Your Achievements
-          </h2>
-          
-          <div className="glass-card p-6 rounded-2xl">
-            <div className="flex flex-wrap gap-3 justify-center">
-              {state.user.achievements.map((achievement, index) => (
+      </motion.div>      {/* Achievement Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.8 }}
+        className="mt-12"
+      >
+        <h2 className="text-3xl font-bold text-white text-center mb-6">
+          🏆 Achievements
+        </h2>
+        
+        <div className="glass-card p-6 rounded-2xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {allAchievements.map((achievement, index) => {
+              const isUnlocked = state.user.achievements.includes(achievement.id);
+              
+              return (
                 <motion.div
-                  key={achievement}
+                  key={achievement.id}
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1, duration: 0.3 }}
-                  whileHover={{ scale: 1.1 }}
-                  className="bg-gradient-to-r from-blue-400 to-medium-teal text-white px-4 py-2 rounded-full font-semibold text-sm shadow-lg"
+                  whileHover={{ scale: isUnlocked ? 1.05 : 1.02 }}                  className={`relative p-4 rounded-xl transition-all duration-300 ${
+                    isUnlocked 
+                      ? 'bg-gradient-to-r from-blue-400 to-medium-teal shadow-lg border border-blue-400/30' 
+                      : 'bg-gradient-to-r from-dark-gray/50 to-medium-gray/40 border border-gray-400/30'
+                  }`}
                 >
-                  🏅 {achievement.replace('-', ' ').toUpperCase()}
+                  {/* Achievement Content */}
+                  <div className="text-center">
+                    <div className={`text-3xl mb-2 ${isUnlocked ? '' : 'grayscale opacity-70'}`}>
+                      {achievement.emoji}
+                    </div>
+                    <h3 className={`font-bold text-sm mb-1 ${
+                      isUnlocked ? 'text-white' : 'text-gray-200'
+                    }`}>
+                      {achievement.name}
+                    </h3>
+                    <p className={`text-xs mb-2 ${
+                      isUnlocked ? 'text-white/90' : 'text-gray-300'
+                    }`}>
+                      {achievement.description}
+                    </p>
+                    <p className={`text-xs ${
+                      isUnlocked ? 'text-blue-200' : 'text-gray-400'
+                    }`}>
+                      {achievement.requirement}
+                    </p>
+                  </div>
+                  
+                  {/* Unlock indicator */}
+                  {isUnlocked && (
+                    <div className="absolute -top-2 -right-2 bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+                      ✓
+                    </div>
+                  )}
                 </motion.div>
-              ))}
+              );
+            })}
+          </div>
+          
+          {/* Progress Stats */}
+          <div className="mt-6 pt-4 border-t border-white/20 text-center">
+            <p className="text-white/70 text-sm">
+              Progress: {state.user.achievements.length} of {allAchievements.length} achievements unlocked
+            </p>
+            <div className="mt-2 bg-white/20 rounded-full h-2 max-w-xs mx-auto">
+              <div 
+                className="bg-gradient-to-r from-blue-400 to-medium-teal h-2 rounded-full transition-all duration-500"
+                style={{ width: `${(state.user.achievements.length / allAchievements.length) * 100}%` }}
+              />
             </div>
           </div>
-        </motion.div>
-      )}      
+        </div>
+      </motion.div>
       
       {/* Progress Celebration Section
       <motion.div

@@ -181,20 +181,21 @@ export function AppProvider({ children }) {
       // Level up achievements
       if (user.level >= 5 && !user.achievements.includes('level-5')) {
         newAchievements.push('level-5');
-      }
-
-      // Bingo master
+      }      // Bingo master
       if (state.bingo.wins >= 3 && !user.achievements.includes('bingo-master')) {
         newAchievements.push('bingo-master');
+      }
+
+      // Daily warrior - complete 7 daily challenges
+      if (state.dailyChallenge.streak >= 7 && !user.achievements.includes('daily-warrior')) {
+        newAchievements.push('daily-warrior');
       }
 
       newAchievements.forEach(achievement => {
         dispatch({ type: 'ADD_ACHIEVEMENT', payload: achievement });
       });
-    };
-
-    checkAchievements();
-  }, [state.user.score, state.user.streak, state.user.level, state.bingo.wins]);
+    };    checkAchievements();
+  }, [state.user.score, state.user.streak, state.user.level, state.bingo.wins, state.dailyChallenge.streak]);
 
   const value = {
     state,
