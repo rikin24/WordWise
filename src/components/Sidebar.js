@@ -14,6 +14,8 @@ import {
   FireIcon
 } from '@heroicons/react/24/outline';
 import { useApp } from '../context/AppContext';
+import cogLogo from '../data/cog_logo_white.png';
+import cogSloganLogo from '../data/cog_slogan_logo_white.png';
 
 function Sidebar({ isOpen, setIsOpen }) {
   const location = useLocation();
@@ -168,12 +170,24 @@ function Sidebar({ isOpen, setIsOpen }) {
                     </Link>
                   </motion.li>
                 );
-              })}
-            </ul>
-          </nav>
+              })}            </ul>
+          </nav>          {/* Cognizant Logo */}
+          <div className="flex justify-center mb-2 flex-shrink-0">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+              className="opacity-70 hover:opacity-100 transition-opacity duration-200"
+            >
+              <img 
+                src={cogLogo} 
+                alt="Cognizant Logo" 
+                className="h-10 w-auto"
+              />
+            </motion.div>
+          </div>
 
           {/* Footer stats */}
-          <div className="border-t border-white/20 pt-4 mt-4 flex-shrink-0">
+          <div className="border-t border-white/20 pt-4 mt-2 flex-shrink-0">
             <div className="text-center">
               <p className="text-white/70 text-xs mb-2">
                 Quiz Score: {state.user.score}/{state.user.totalQuestions}
