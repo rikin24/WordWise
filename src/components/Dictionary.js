@@ -227,68 +227,66 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
         </h1>
         <p className="text-xl text-white/80">
           Your comprehensive guide to corporate jargon
-        </p>
-      </motion.div>
-
-      {/* View Selector */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="flex justify-center mb-8"
-      >
-        <div className="glass-card p-2 rounded-xl flex space-x-2">          <button
-            onClick={() => handleViewChange('terms')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
-              currentView === 'terms'
-                ? 'bg-gradient-to-r from-medium-blue to-blue-400 text-white shadow-lg'
-                : 'text-white/70 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            🔤 Terms ({allTerms.length + userSubmissions.terms.length})
-          </button>
-          <button
-            onClick={() => handleViewChange('acronyms')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
-              currentView === 'acronyms'
-                ? 'bg-gradient-to-r from-medium-plum to-blue-400 text-white shadow-lg'
-                : 'text-white/70 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            🏢 Acronyms ({allAcronyms.length + userSubmissions.acronyms.length})
-          </button>        </div>
-      </motion.div>
-
-      {/* Section Selector */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="flex justify-center mb-8"
-      >
-        <div className="glass-card p-2 rounded-xl flex space-x-2">
-          <button
-            onClick={() => handleSectionChange('official')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
-              currentSection === 'official'
-                ? 'bg-gradient-to-r from-medium-teal to-blue-400 text-white shadow-lg'
-                : 'text-white/70 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            📚 Official ({currentView === 'terms' ? allTerms.length : allAcronyms.length})
-          </button>
-          <button
-            onClick={() => handleSectionChange('community')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
-              currentSection === 'community'
-                ? 'bg-gradient-to-r from-medium-blue to-blue-400 text-white shadow-lg'
-                : 'text-white/70 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            👥 Community ({currentView === 'terms' ? userSubmissions.terms.length : userSubmissions.acronyms.length})
-          </button>
-        </div>      </motion.div>
+        </p>      </motion.div>
 
       {/* Top Pagination Controls */}
       <PaginationControls className="mb-8" />
+
+      {/* Combined Tab Selectors */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex justify-center mb-8"
+      >
+        <div className="flex flex-col md:flex-row gap-4 items-center">
+          {/* View Selector */}
+          <div className="glass-card p-2 rounded-xl flex space-x-2">
+            <button
+              onClick={() => handleViewChange('terms')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                currentView === 'terms'
+                  ? 'bg-gradient-to-r from-medium-blue to-blue-400 text-white shadow-lg'
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              🔤 Terms ({allTerms.length + userSubmissions.terms.length})
+            </button>
+            <button
+              onClick={() => handleViewChange('acronyms')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                currentView === 'acronyms'
+                  ? 'bg-gradient-to-r from-medium-plum to-blue-400 text-white shadow-lg'
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              🏢 Acronyms ({allAcronyms.length + userSubmissions.acronyms.length})
+            </button>
+          </div>
+
+          {/* Section Selector */}
+          <div className="glass-card p-2 rounded-xl flex space-x-2">
+            <button
+              onClick={() => handleSectionChange('official')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                currentSection === 'official'
+                  ? 'bg-gradient-to-r from-medium-teal to-blue-400 text-white shadow-lg'
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              📚 Official ({currentView === 'terms' ? allTerms.length : allAcronyms.length})
+            </button>
+            <button
+              onClick={() => handleSectionChange('community')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                currentSection === 'community'
+                  ? 'bg-gradient-to-r from-medium-blue to-blue-400 text-white shadow-lg'
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              👥 Community ({currentView === 'terms' ? userSubmissions.terms.length : userSubmissions.acronyms.length})
+            </button>
+          </div>        </div>
+      </motion.div>
 
       {/* Search and Filter */}
       <motion.div

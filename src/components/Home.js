@@ -184,7 +184,7 @@ function Home({ onCelebration }) {
         >
           <Link
             to="/translator"
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-medium-teal via-medium-blue to-dark-blue hover:from-light-teal hover:via-medium-blue hover:to-light-blue text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-light-plum/20 hover:shadow-3xl transition-all duration-400 neon-glow relative overflow-hidden group"
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-medium-teal via-medium-plum to-dark-blue hover:from-light-teal hover:via-medium-blue hover:to-light-blue text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-light-plum/20 hover:shadow-3xl transition-all duration-400 neon-glow relative overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
             <motion.div
