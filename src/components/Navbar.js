@@ -36,17 +36,17 @@ function Navbar({ sidebarOpen, setSidebarOpen }) {
               <Bars3Icon className="h-6 w-6 text-white" />
             )}
           </button>
-          
-          <Link to="/" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2 group">
             <motion.div
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.5 }}
               className="text-3xl"
             >
               🎯
-            </motion.div>
-            <h1 className="text-2xl font-bold text-white hidden sm:block">
-              Consultingo
+            </motion.div>            <h1 className="text-2xl font-bold hidden sm:block relative overflow-hidden group-hover:cursor-pointer">
+              <span className="relative z-10 bg-gradient-to-r from-white via-white to-white bg-clip-text text-transparent group-hover:from-white group-hover:via-light-gray group-hover:to-white group-hover:bg-[length:200%_100%] group-hover:animate-shimmer transition-all duration-300">
+                Consultingo
+              </span>
             </h1>
           </Link>
         </div>        <div className="flex items-center space-x-4">
