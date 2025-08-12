@@ -2,6 +2,8 @@
 
 A stunning, modern corporate jargon learning app with exciting visual features, professional design, and gamified learning experience.
 
+## 📑 Overview
+
 ### 🎨 Visual Enhancements
 - **Modern Glass-morphism Design** - Beautiful frosted glass cards with backdrop blur effects
 - **Gradient Backgrounds** - Dynamic color gradients throughout the application
