@@ -22,14 +22,14 @@ function Home({ onCelebration }) {
       description: 'Test your knowledge with interactive quizzes',
       icon: AcademicCapIcon,
       path: '/quiz',
-      color: 'from-medium-plum to-light-plum',
+      color: 'from-blue-400 to-light-plum',
       emoji: '🧠'
     },    {
       title: 'Translator',
       description: 'Convert between corporate jargon and plain English',
       icon: LanguageIcon,
       path: '/translator',
-      color: 'from-medium-blue to-light-blue',
+      color: 'from-blue-400 to-medium-blue',
       emoji: '🔄'
     },
     {
@@ -45,14 +45,14 @@ function Home({ onCelebration }) {
       description: 'Browse all corporate terms',
       icon: BookmarkIcon,
       path: '/dictionary',
-      color: 'from-medium-plum to-light-plum',
+      color: 'from-blue-400 to-light-plum',
       emoji: '📖'
     },    {
       title: 'Daily Challenge',
       description: 'Complete daily challenges for rewards',
       icon: StarIcon,
       path: '/challenge',
-      color: 'from-medium-blue to-light-blue',
+      color: 'from-blue-400 to-medium-blue',
       emoji: '🌟'
     },
     {
@@ -258,7 +258,9 @@ function Home({ onCelebration }) {
             </div>
           </div>
         </motion.div>
-      )}      {/* Progress Celebration Section */}
+      )}      
+      
+      {/* Progress Celebration Section
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -309,7 +311,7 @@ function Home({ onCelebration }) {
         >
           Let's Celebrate! 🎊
         </motion.button>
-      </motion.div>
+      </motion.div> */}
     </div>
   );
 }
