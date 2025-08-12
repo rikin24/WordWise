@@ -36,7 +36,7 @@ function Sidebar({ isOpen, setIsOpen }) {
     { path: '/bingo', name: 'Jargon Bingo', icon: CubeIcon },
     { path: '/dictionary', name: 'Dictionary', icon: BookmarkIcon },
     { path: '/challenge', name: 'Daily Challenge', icon: StarIcon },
-    { path: '/submit', name: 'Submit Term', icon: PlusIcon },
+    { path: '/submit', name: 'Submit Jargon', icon: PlusIcon },
   ];
 
   const sidebarVariants = {

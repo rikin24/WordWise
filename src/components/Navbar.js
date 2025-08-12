@@ -12,7 +12,7 @@ function Navbar({ sidebarOpen, setSidebarOpen }) {
       case '/bingo': return 'Jargon Bingo';
       case '/dictionary': return 'Dictionary';
       case '/challenge': return 'Daily Challenge';
-      case '/submit': return 'Submit Term';
+      case '/submit': return 'Submit Jargon';
       default: return 'Consultingo';
     }
   };

@@ -11,36 +11,41 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
   const [currentView, setCurrentView] = useState('terms');
   const [currentSection, setCurrentSection] = useState('official'); // 'official' or 'community'
   const [userSubmissions, setUserSubmissions] = useState({ terms: [], acronyms: [] });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(50);
 
   const allTerms = jargonData.terms;
-  const allAcronyms = jargonData.acronyms;
-  
-  // Get user submissions on component mount and when view changes
+  const allAcronyms = jargonData.acronyms;  // Get user submissions on component mount
   useEffect(() => {
+    // Ensure service is properly initialized
+    userSubmissionService.initializeStorage();
     const submissions = userSubmissionService.getUserSubmissions();
+    console.log('Dictionary - User submissions loaded:', submissions);
     setUserSubmissions(submissions);
-  }, [currentView]);
+  }, []);  // Recalculate filters when view or data changes
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    filterItems();
+    setCurrentPage(1); // Reset to first page when filters change
+  }, [searchTerm, selectedCategory, currentView, currentSection, userSubmissions]);
   
   const categories = ['all', ...new Set([
     ...allTerms.map(term => term.category),
     ...userSubmissions.terms.map(term => term.category)
   ].filter(Boolean))];
-  
-  const acronymCategories = ['all', ...new Set([
+    const acronymCategories = ['all', ...new Set([
     ...allAcronyms.map(item => item.category),
     ...userSubmissions.acronyms.map(item => item.category)
   ].filter(Boolean))];
-  useEffect(() => {
-    filterItems();
-  }, [searchTerm, selectedCategory, currentView, currentSection, userSubmissions]);const filterItems = () => {
+    const filterItems = () => {
     // Filter official items
     const officialItems = currentView === 'terms' ? allTerms : allAcronyms;
     const filteredOfficial = officialItems.filter(item => {
       const searchMatch = currentView === 'terms'
-        ? item.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.definition.toLowerCase().includes(searchTerm.toLowerCase())
-        : item.acronym.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.full_name.toLowerCase().includes(searchTerm.toLowerCase());
+        ? (item.term || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (item.definition || '').toLowerCase().includes(searchTerm.toLowerCase())
+        : (item.acronym || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (item.full_name || item.fullName || '').toLowerCase().includes(searchTerm.toLowerCase());
       
       const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
       
@@ -51,10 +56,10 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
     const userItems = currentView === 'terms' ? userSubmissions.terms : userSubmissions.acronyms;
     const filteredUser = userItems.filter(item => {
       const searchMatch = currentView === 'terms'
-        ? item.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.definition.toLowerCase().includes(searchTerm.toLowerCase())
-        : item.acronym.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.full_name.toLowerCase().includes(searchTerm.toLowerCase());
+        ? (item.term || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (item.definition || '').toLowerCase().includes(searchTerm.toLowerCase())
+        : (item.acronym || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (item.fullName || item.full_name || '').toLowerCase().includes(searchTerm.toLowerCase());
       
       const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
       
@@ -63,18 +68,150 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
 
     setFilteredTerms(filteredOfficial);
     setFilteredUserTerms(filteredUser);
-  };
-  const handleViewChange = (view) => {
+  };  const handleViewChange = (view) => {
     setCurrentView(view);
     setCurrentSection('official'); // Reset to official section when changing view
     setSearchTerm('');
     setSelectedCategory('all');
+    setCurrentPage(1);
   };
 
   const handleSectionChange = (section) => {
     setCurrentSection(section);
     setSearchTerm('');
     setSelectedCategory('all');
+    setCurrentPage(1);
+  };
+
+  // Pagination logic
+  const getCurrentItems = () => {
+    const items = currentSection === 'official' ? filteredTerms : filteredUserTerms;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return items.slice(startIndex, endIndex);
+  };
+
+  const getTotalPages = () => {
+    const items = currentSection === 'official' ? filteredTerms : filteredUserTerms;
+    return Math.ceil(items.length / itemsPerPage);
+  };
+  const goToPage = (page) => {
+    setCurrentPage(page);
+    // Scroll to top of results when changing page
+    window.scrollTo({ top: 400, behavior: 'smooth' });
+  };
+
+  // Pagination component for reuse
+  const PaginationControls = ({ className = "" }) => {
+    if (getTotalPages() <= 1) return null;
+    
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className={`flex justify-center items-center gap-2 ${className}`}
+      >
+        <div className="glass-card p-3 rounded-xl flex items-center gap-2">
+          {/* Previous Button */}
+          <button
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
+              currentPage === 1
+                ? 'text-white/30 cursor-not-allowed'
+                : 'text-white/70 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            ‹ Previous
+          </button>
+
+          {/* Page Numbers */}
+          <div className="flex gap-1">
+            {(() => {
+              const totalPages = getTotalPages();
+              const maxVisible = 5;
+              let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+              let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+              
+              if (endPage - startPage + 1 < maxVisible) {
+                startPage = Math.max(1, endPage - maxVisible + 1);
+              }
+
+              const pages = [];
+              
+              // First page if not in range
+              if (startPage > 1) {
+                pages.push(
+                  <button
+                    key={1}
+                    onClick={() => goToPage(1)}
+                    className="px-3 py-2 rounded-lg text-sm font-semibold text-white/70 hover:text-white hover:bg-white/10 transition-all duration-300"
+                  >
+                    1
+                  </button>
+                );
+                if (startPage > 2) {
+                  pages.push(
+                    <span key="ellipsis1" className="px-2 text-white/50">...</span>
+                  );
+                }
+              }
+
+              // Visible page numbers
+              for (let i = startPage; i <= endPage; i++) {
+                pages.push(
+                  <button
+                    key={i}
+                    onClick={() => goToPage(i)}
+                    className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                      i === currentPage
+                        ? 'bg-gradient-to-r from-medium-blue to-blue-400 text-white shadow-lg'
+                        : 'text-white/70 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {i}
+                  </button>
+                );
+              }
+
+              // Last page if not in range
+              if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                  pages.push(
+                    <span key="ellipsis2" className="px-2 text-white/50">...</span>
+                  );
+                }
+                pages.push(
+                  <button
+                    key={totalPages}
+                    onClick={() => goToPage(totalPages)}
+                    className="px-3 py-2 rounded-lg text-sm font-semibold text-white/70 hover:text-white hover:bg-white/10 transition-all duration-300"
+                  >
+                    {totalPages}
+                  </button>
+                );
+              }
+
+              return pages;
+            })()}
+          </div>
+
+          {/* Next Button */}
+          <button
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === getTotalPages()}
+            className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
+              currentPage === getTotalPages()
+                ? 'text-white/30 cursor-not-allowed'
+                : 'text-white/70 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            Next ›
+          </button>
+        </div>
+      </motion.div>
+    );
   };
 
   return (
@@ -103,7 +240,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
             onClick={() => handleViewChange('terms')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
               currentView === 'terms'
-                ? 'bg-gradient-to-r from-medium-blue to-dark-blue text-white shadow-lg'
+                ? 'bg-gradient-to-r from-medium-blue to-blue-400 text-white shadow-lg'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -148,8 +285,10 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
           >
             👥 Community ({currentView === 'terms' ? userSubmissions.terms.length : userSubmissions.acronyms.length})
           </button>
-        </div>
-      </motion.div>
+        </div>      </motion.div>
+
+      {/* Top Pagination Controls */}
+      <PaginationControls className="mb-8" />
 
       {/* Search and Filter */}
       <motion.div
@@ -189,13 +328,16 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
         <div className="mt-4 text-center">
           <span className="text-white/70 text-sm">
             {currentSection === 'official' ? (
-              <>Showing {filteredTerms.length} of {currentView === 'terms' ? allTerms.length : allAcronyms.length} official {currentView}</>
+              <>Showing {Math.min(filteredTerms.length, (currentPage - 1) * itemsPerPage + 1)}-{Math.min(filteredTerms.length, currentPage * itemsPerPage)} of {filteredTerms.length} official {currentView}</>
             ) : (
-              <>Showing {filteredUserTerms.length} of {currentView === 'terms' ? userSubmissions.terms.length : userSubmissions.acronyms.length} community {currentView}</>
+              <>Showing {Math.min(filteredUserTerms.length, (currentPage - 1) * itemsPerPage + 1)}-{Math.min(filteredUserTerms.length, currentPage * itemsPerPage)} of {filteredUserTerms.length} community {currentView}</>
             )}
-          </span>
-        </div>
-      </motion.div>      {/* Results Grid */}
+            {getTotalPages() > 1 && (
+              <span className="ml-2">• Page {currentPage} of {getTotalPages()}</span>            )}
+          </span>        </div>
+      </motion.div>
+
+      {/* Results Grid */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -222,7 +364,7 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
             </p>
           </motion.div>
         ) : (
-          (currentSection === 'official' ? filteredTerms : filteredUserTerms).map((item, index) => (            <motion.div
+          getCurrentItems().map((item, index) => (<motion.div
               key={`${currentSection}-${currentView}-${index}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -264,10 +406,8 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
                         📅 {item.submittedDate}
                       </span>
                     )}
-                  </div>
-
-                  <p className="text-lg text-white/90 mb-4 leading-relaxed">
-                    {currentView === 'terms' ? item.definition : item.full_name}
+                  </div>                  <p className="text-lg text-white/90 mb-4 leading-relaxed">
+                    {currentView === 'terms' ? item.definition : (item.full_name || item.fullName)}
                   </p>
 
                   {currentView === 'terms' && item.example && (
@@ -293,9 +433,8 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-medium-teal to-blue-400 text-white px-4 py-2 rounded-lg text-sm font-semibold"
-                    onClick={() => {
-                      navigator.clipboard.writeText(currentView === 'terms' ? item.term : `${item.acronym} - ${item.full_name}`);
+                    className="bg-gradient-to-r from-medium-teal to-blue-400 text-white px-4 py-2 rounded-lg text-sm font-semibold"                    onClick={() => {
+                      navigator.clipboard.writeText(currentView === 'terms' ? item.term : `${item.acronym} - ${item.full_name || item.fullName || ''}`);
                       // You could add a toast here
                     }}
                   >
@@ -303,10 +442,11 @@ function Dictionary() {  const [searchTerm, setSearchTerm] = useState('');
                   </motion.button>
                 </div>
               </div>
-            </motion.div>
-          ))
-        )}
-      </motion.div>      {/* Footer Stats */}
+            </motion.div>          ))        )}
+      </motion.div>
+
+      {/* Bottom Pagination Controls */}
+      <PaginationControls className="mt-8" />{/* Footer Stats */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

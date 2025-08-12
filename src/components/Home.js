@@ -163,15 +163,13 @@ function Home({ onCelebration }) {
           className="text-8xl mb-6"
         >
           🎯
-        </motion.div>
-        
-        <h1 className="text-6xl md:text-8xl font-bold text-white mb-6">
+        </motion.div>        <h1 className="text-6xl md:text-8xl font-bold text-white mb-6">
           <span className="gradient-text">Consultingo</span>
         </h1>
         
-        <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto mb-8">
-          Master corporate jargon like a pro! Transform confusing buzzwords into career-boosting knowledge with our gamified learning platform.
-        </p>        <motion.div
+        <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto mb-8">
+          Master corporate jargon through quizzes, translation, bingo, and daily challenges. Level up, earn achievements, and contribute to the community!
+        </p><motion.div
           whileHover={{ 
             scale: 1.03,
             y: -2,
