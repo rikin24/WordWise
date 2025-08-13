@@ -184,10 +184,39 @@ function Sidebar({ isOpen, setIsOpen }) {
                 className="h-10 w-auto"
               />
             </motion.div>
-          </div>
-
-          {/* Footer stats */}
+          </div>          
+          {/* Development Tools */}
           <div className="border-t border-white/20 pt-4 mt-2 flex-shrink-0">
+            {/* <div className="mb-4">
+              <h3 className="text-white/70 text-xs font-semibold mb-2 uppercase tracking-wide">
+                Development Tools
+              </h3>
+              <div className="space-y-1">
+                <Link
+                  to="/cleanup-data"
+                  className="flex items-center space-x-2 p-2 rounded-lg text-white/60 hover:bg-white/10 hover:text-white transition-all duration-200 text-xs"
+                >
+                  <span>🧹</span>
+                  <span>Data Cleanup</span>
+                </Link>
+                <Link
+                  to="/debug-data"
+                  className="flex items-center space-x-2 p-2 rounded-lg text-white/60 hover:bg-white/10 hover:text-white transition-all duration-200 text-xs"
+                >
+                  <span>🔍</span>
+                  <span>Debug Data</span>
+                </Link>
+                <Link
+                  to="/test-submissions"
+                  className="flex items-center space-x-2 p-2 rounded-lg text-white/60 hover:bg-white/10 hover:text-white transition-all duration-200 text-xs"
+                >
+                  <span>🧪</span>
+                  <span>Test Submissions</span>
+                </Link>
+              </div>
+            </div> */}
+            
+            {/* Footer stats */}
             <div className="text-center">
               <p className="text-white/70 text-xs mb-2">
                 Quiz Score: {state.user.score}/{state.user.totalQuestions}

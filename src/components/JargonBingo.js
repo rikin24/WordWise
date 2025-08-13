@@ -94,9 +94,21 @@ function JargonBingo({ onCelebration }) {
     
     const wins = checkForBingo(newSelected);
     setWinningLines(wins);
-    
-    if (wins.length > 0 && winningLines.length === 0) {
-      toast.success('🎉 BINGO! You won!');
+      if (wins.length > 0 && winningLines.length === 0) {
+      toast.success('🎉 BINGO! You won!', {
+        duration: 5000,
+        className: 'custom-toast toast-success',
+        style: {
+          background: 'transparent',
+          border: 'none',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          backdropFilter: 'blur(16px)',
+          color: '#f0fdf4',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '1.4'
+        }
+      });
       bingoWin();
       onCelebration();
     }
@@ -104,7 +116,20 @@ function JargonBingo({ onCelebration }) {
 
   const resetBoard = () => {
     generateBoard();
-    toast.success('New board generated!');
+    toast.success('New board generated!', {
+      duration: 2000,
+      className: 'custom-toast toast-success',
+      style: {
+        background: 'transparent',
+        border: 'none',
+        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        backdropFilter: 'blur(16px)',
+        color: '#f0fdf4',
+        fontSize: '14px',
+        fontWeight: '500',
+        lineHeight: '1.4'
+      }
+    });
   };
 
   return (

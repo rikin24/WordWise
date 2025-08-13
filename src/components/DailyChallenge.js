@@ -79,13 +79,38 @@ function DailyChallenge({ onCelebration }) {
     
     setIsCorrect(correct);
     setShowResult(true);
-    
-    if (correct) {
+      if (correct) {
       completeDailyChallenge();
-      toast.success('🎉 Daily challenge completed!');
+      toast.success('🎉 Daily challenge completed!', {
+        duration: 4000,
+        className: 'custom-toast toast-success',
+        style: {
+          background: 'transparent',
+          border: 'none',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          backdropFilter: 'blur(16px)',
+          color: '#f0fdf4',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '1.4'
+        }
+      });
       onCelebration();
     } else {
-      toast.error('Not quite right. Try again tomorrow!');
+      toast.error('Not quite right. Try again tomorrow!', {
+        duration: 4000,
+        className: 'custom-toast toast-error',
+        style: {
+          background: 'transparent',
+          border: 'none',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          backdropFilter: 'blur(16px)',
+          color: '#fef2f2',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '1.4'
+        }
+      });
     }
   };
 

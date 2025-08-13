@@ -19,6 +19,7 @@ import UserSubmissionTest from './components/UserSubmissionTest';
 import TranslationTest from './components/TranslationTest';
 import LocalStorageViewer from './components/LocalStorageViewer';
 import DebugUserData from './components/DebugUserData';
+import DataCleanupManager from './components/DataCleanupManager';
 
 // Data
 import { jargonData } from './data/jargonData';
@@ -214,6 +215,19 @@ function App() {
                           transition={{ duration: 0.3 }}
                         >
                           <DebugUserData />
+                        </motion.div>
+                      } 
+                    />
+                    <Route 
+                      path="/cleanup-data" 
+                      element={
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <DataCleanupManager />
                         </motion.div>
                       } 
                     />

@@ -17,9 +17,21 @@ function Translator() {
   const [outputText, setOutputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [history, setHistory] = useState([]);
-  const translateText = async () => {
-    if (!inputText.trim()) {
-      toast.error('Please enter some text to translate');
+  const translateText = async () => {    if (!inputText.trim()) {
+      toast.error('Please enter some text to translate', {
+        duration: 3000,
+        className: 'custom-toast toast-warning',
+        style: {
+          background: 'transparent',
+          border: 'none',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          backdropFilter: 'blur(16px)',
+          color: '#fffbeb',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '1.4'
+        }
+      });
       return;
     }
 
@@ -42,21 +54,121 @@ function Translator() {
         output: translatedText,
         mode: translationMode,
         timestamp: new Date().toLocaleTimeString()
-      };
-      setHistory(prev => [newEntry, ...prev.slice(0, 9)]); // Keep last 10 translations
+      };      setHistory(prev => [newEntry, ...prev.slice(0, 9)]); // Keep last 10 translations
       
-      toast.success('Translation completed!');
-    } catch (error) {
+      toast.success('Translation completed!', {
+        duration: 3000,
+        className: 'custom-toast toast-success',
+        style: {
+          background: 'transparent',
+          border: 'none',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          backdropFilter: 'blur(16px)',
+          color: '#f0fdf4',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '1.4'
+        }
+      });} catch (error) {
       console.error('Translation error:', error);
-      toast.error(error.message || 'Translation failed. Please try again.');
+      
+      // Show more specific error messages based on error type with glassmorphism styling
+      if (error.message.includes('Setup Required')) {
+        toast.error('🔧 Setup Required\nPlease configure your Gemini API key to use translation features.', {
+          duration: 8000,
+          className: 'custom-toast toast-info',
+          style: {
+            background: 'transparent',
+            border: 'none',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            backdropFilter: 'blur(16px)',
+            color: '#eff6ff',
+            fontSize: '14px',
+            fontWeight: '500',
+            lineHeight: '1.4'
+          }
+        });
+      } else if (error.message.includes('Invalid or missing API key')) {
+        toast.error('🔑 API Configuration Issue\nPlease check your Gemini API key setup.', {
+          duration: 6000,
+          className: 'custom-toast toast-error',
+          style: {
+            background: 'transparent',
+            border: 'none',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            backdropFilter: 'blur(16px)',
+            color: '#fef2f2',
+            fontSize: '14px',
+            fontWeight: '500',
+            lineHeight: '1.4'
+          }
+        });
+      } else if (error.message.includes('quota exceeded')) {
+        toast.error('📊 Quota Exceeded\nAPI usage limit reached. Please try again later.', {
+          duration: 6000,
+          className: 'custom-toast toast-warning',
+          style: {
+            background: 'transparent',
+            border: 'none',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            backdropFilter: 'blur(16px)',
+            color: '#fffbeb',
+            fontSize: '14px',
+            fontWeight: '500',
+            lineHeight: '1.4'
+          }
+        });
+      } else if (error.message.includes('Network error')) {
+        toast.error('🌐 Connection Issue\nPlease check your internet connection.', {
+          duration: 4000,
+          className: 'custom-toast toast-info',
+          style: {
+            background: 'transparent',
+            border: 'none',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            backdropFilter: 'blur(16px)',
+            color: '#eff6ff',
+            fontSize: '14px',
+            fontWeight: '500',
+            lineHeight: '1.4'
+          }
+        });
+      } else {
+        toast.error(error.message || 'Translation failed. Please try again.', {
+          duration: 4000,
+          className: 'custom-toast toast-error',
+          style: {
+            background: 'transparent',
+            border: 'none',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            backdropFilter: 'blur(16px)',
+            color: '#fef2f2',
+            fontSize: '14px',
+            fontWeight: '500',
+            lineHeight: '1.4'
+          }
+        });
+      }
     } finally {
       setIsLoading(false);
     }
   };
-
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
-    toast.success('Copied to clipboard!');
+    toast.success('Copied to clipboard!', {
+      duration: 2000,
+      className: 'custom-toast toast-success',
+      style: {
+        background: 'transparent',
+        border: 'none',
+        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        backdropFilter: 'blur(16px)',
+        color: '#f0fdf4',
+        fontSize: '14px',
+        fontWeight: '500',
+        lineHeight: '1.4'
+      }
+    });
   };
 
   const speakText = (text) => {
@@ -65,7 +177,20 @@ function Translator() {
       utterance.rate = 0.8;
       speechSynthesis.speak(utterance);
     } else {
-      toast.error('Text-to-speech not supported in your browser');
+      toast.error('Text-to-speech not supported in your browser', {
+        duration: 4000,
+        className: 'custom-toast toast-error',
+        style: {
+          background: 'transparent',
+          border: 'none',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          backdropFilter: 'blur(16px)',
+          color: '#fef2f2',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '1.4'
+        }
+      });
     }
   };
   return (

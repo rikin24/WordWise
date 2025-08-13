@@ -3,7 +3,9 @@ import { jargonData } from '../data/jargonData';
 import { userSubmissionService } from './userSubmissionService';
 
 // Initialize Google Generative AI
-const genAI = new GoogleGenerativeAI("AIzaSyDocyd09XQkgX2a7RypQwYk0_S_9Mzo9QI");
+// TODO: Replace "YOUR_GEMINI_KEY" with your actual Gemini API key
+// Get your API key from: https://aistudio.google.com/app/apikey
+const genAI = new GoogleGenerativeAI("YOUR_GEMINI_KEY");
 
 // Prepare jargon context for AI
 const prepareJargonContext = () => {
@@ -63,6 +65,11 @@ const prepareJargonContext = () => {
 
 export const translateToJargon = async (plainText) => {
   try {
+    // Check if API key is still the placeholder
+    if (genAI.apiKey === "YOUR_GEMINI_KEY") {
+      throw new Error('🔧 Setup Required: Please replace "YOUR_GEMINI_KEY" with your actual Gemini API key in translationService.js');
+    }
+    
     console.log('Starting translation to jargon for:', plainText);
     
     const context = prepareJargonContext();
@@ -99,20 +106,62 @@ export const translateToJargon = async (plainText) => {
     const translatedText = response.text();
     console.log('Translation successful:', translatedText);
     
-    return translatedText;
-  } catch (error) {
-    console.error('Translation to jargon failed:', error);
+    return translatedText;  } catch (error) {    console.error('Translation to jargon failed:', error);
     console.error('Error details:', {
       message: error.message,
       stack: error.stack,
       name: error.name
     });
-    throw new Error(`Failed to translate to corporate jargon: ${error.message}`);
+    
+    // Check for API key related errors
+    if (error.message && (
+      error.message.includes('API_KEY_INVALID') ||
+      error.message.includes('invalid API key') ||
+      error.message.includes('API key not valid') ||
+      error.message.includes('YOUR_GEMINI_KEY') ||
+      error.message.includes('PERMISSION_DENIED') ||
+      error.message.includes('Invalid API key') ||
+      error.message.includes('Unauthorized') ||
+      error.message.includes('401') ||
+      error.message.includes('403') ||
+      error.status === 401 ||
+      error.status === 403
+    )) {
+      throw new Error('🔑 Invalid or missing API key. Please check your Gemini API configuration.');
+    }
+    
+    // Check for quota/billing errors
+    if (error.message && (
+      error.message.includes('quota') ||
+      error.message.includes('billing') ||
+      error.message.includes('QUOTA_EXCEEDED') ||
+      error.message.includes('429')
+    )) {
+      throw new Error('📊 API quota exceeded. Please check your Gemini API usage limits.');
+    }
+    
+    // Check for network errors
+    if (error.message && (
+      error.message.includes('network') ||
+      error.message.includes('fetch') ||
+      error.message.includes('timeout') ||
+      error.message.includes('NETWORK_ERROR')
+    )) {
+      throw new Error('🌐 Network error. Please check your internet connection and try again.');
+    }
+    
+    // Generic fallback error
+    throw new Error(`❌ Translation failed: ${error.message || 'Unknown error occurred'}`);
   }
 };
 
 export const translateToPlain = async (jargonText) => {
   try {
+    // Check if API key is still the placeholder
+    if (genAI.apiKey === "YOUR_GEMINI_KEY") {
+      throw new Error('🔧 Setup Required: Please replace "YOUR_GEMINI_KEY" with your actual Gemini API key in translationService.js');
+    }
+    
     console.log('Starting translation to plain English for:', jargonText);
     
     const context = prepareJargonContext();
@@ -161,14 +210,51 @@ export const translateToPlain = async (jargonText) => {
     const translatedText = response.text();
     console.log('Translation successful:', translatedText);
     
-    return translatedText;
-  } catch (error) {
-    console.error('Translation to plain English failed:', error);
+    return translatedText;  } catch (error) {    console.error('Translation to plain English failed:', error);
     console.error('Error details:', {
       message: error.message,
       stack: error.stack,
       name: error.name
     });
-    throw new Error(`Failed to translate to plain English: ${error.message}`);
+    
+    // Check for API key related errors
+    if (error.message && (
+      error.message.includes('API_KEY_INVALID') ||
+      error.message.includes('invalid API key') ||
+      error.message.includes('API key not valid') ||
+      error.message.includes('YOUR_GEMINI_KEY') ||
+      error.message.includes('PERMISSION_DENIED') ||
+      error.message.includes('Invalid API key') ||
+      error.message.includes('Unauthorized') ||
+      error.message.includes('401') ||
+      error.message.includes('403') ||
+      error.status === 401 ||
+      error.status === 403
+    )) {
+      throw new Error('🔑 Invalid or missing API key. Please check your Gemini API configuration.');
+    }
+    
+    // Check for quota/billing errors
+    if (error.message && (
+      error.message.includes('quota') ||
+      error.message.includes('billing') ||
+      error.message.includes('QUOTA_EXCEEDED') ||
+      error.message.includes('429')
+    )) {
+      throw new Error('📊 API quota exceeded. Please check your Gemini API usage limits.');
+    }
+    
+    // Check for network errors
+    if (error.message && (
+      error.message.includes('network') ||
+      error.message.includes('fetch') ||
+      error.message.includes('timeout') ||
+      error.message.includes('NETWORK_ERROR')
+    )) {
+      throw new Error('🌐 Network error. Please check your internet connection and try again.');
+    }
+    
+    // Generic fallback error
+    throw new Error(`❌ Translation failed: ${error.message || 'Unknown error occurred'}`);
   }
 };

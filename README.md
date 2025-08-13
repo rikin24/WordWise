@@ -70,22 +70,28 @@ A stunning, modern corporate jargon learning app with exciting visual features, 
 
 ### Installation Steps
 
-1. **Install Dependencies**
+1. **Configure Gemini API Key**
+- Generate a Gemini API key from https://aistudio.google.com/app/apikey
+- Navigate to `src/services/translationService.js`
+- Replace "YOUR_GEMINI_KEY" with your actual Gemini API key
+- Save the file
+
+2. **Install Dependencies**
    ```bash
    npm install
    ```
 
-2. **Start Development Server**
+3. **Start Development Server**
    ```bash
    npm start
    ```
 
-3. **Build for Production**
+4. **Build for Production (Optional)**
    ```bash
    npm run build
    ```
 
-4. **Run Tests**
+5. **Run Tests (Optional)**
    ```bash
    npm test
    ```

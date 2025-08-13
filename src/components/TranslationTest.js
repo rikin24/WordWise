@@ -1,6 +1,7 @@
 // Simple translation test to debug the issue
 import React, { useState } from 'react';
 import { translateToJargon, translateToPlain } from '../services/translationService';
+import toast from 'react-hot-toast';
 
 async function testTranslation() {
   try {
@@ -25,7 +26,6 @@ async function testTranslation() {
 export default function TranslationTest() {
   const [isRunning, setIsRunning] = useState(false);
   const [results, setResults] = useState([]);
-
   const runTest = async () => {
     setIsRunning(true);
     try {
@@ -40,7 +40,14 @@ export default function TranslationTest() {
         { input: jargonText, output: result2, type: 'to-plain' }
       ]);
     } catch (error) {
-      setResults([{ error: error.message }]);
+      // Provide user-friendly error message
+      let friendlyError = error.message;
+      if (error.message.includes('Setup Required')) {
+        friendlyError = '🔧 Please configure your Gemini API key to test translation features.';
+      } else if (error.message.includes('Invalid or missing API key')) {
+        friendlyError = '🔑 Invalid API key. Please check your Gemini API configuration.';
+      }
+      setResults([{ error: friendlyError }]);
     }
     setIsRunning(false);
   };

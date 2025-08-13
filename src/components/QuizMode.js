@@ -58,14 +58,39 @@ function QuizMode({ onCelebration }) {
     setShowResult(true);
     
     updateQuizScore(correct);
-    
-    if (correct) {
-      toast.success('Correct! 🎉');
+      if (correct) {
+      toast.success('Correct! 🎉', {
+        duration: 3000,
+        className: 'custom-toast toast-success',
+        style: {
+          background: 'transparent',
+          border: 'none',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          backdropFilter: 'blur(16px)',
+          color: '#f0fdf4',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '1.4'
+        }
+      });
       if (state.user.streak > 0 && state.user.streak % 5 === 0) {
         onCelebration();
       }
     } else {
-      toast.error('Not quite right 😅');
+      toast.error('Not quite right 😅', {
+        duration: 3000,
+        className: 'custom-toast toast-error',
+        style: {
+          background: 'transparent',
+          border: 'none',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          backdropFilter: 'blur(16px)',
+          color: '#fef2f2',
+          fontSize: '14px',
+          fontWeight: '500',
+          lineHeight: '1.4'
+        }
+      });
     }
   };
 
@@ -248,7 +273,7 @@ function QuizMode({ onCelebration }) {
             initial={{ width: 0 }}
             animate={{ width: `${(state.user.experience % 100)}%` }}
             transition={{ duration: 1 }}
-            className="bg-gradient-to-r from-light-teal to-medium-teal h-3 rounded-full"
+            className="bg-gradient-to-r from-light-teal to-blue-400 h-3 rounded-full"
           />
         </div>
         <p className="text-white/70 text-xs mt-2 text-center">
