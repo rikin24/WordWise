@@ -26,17 +26,17 @@ A stunning, modern corporate jargon learning app with exciting visual features, 
 
 ### 🧠 Learning Modes
 
+#### 🔄 Translator
+- AI translation between corporate jargon and plain English
+- Knowledge base of terms and acronyms to train the AI
+- Prompt engineered to bring accurate and appropriate translations
+- Copy and text-to-speech features for translated text
+
 #### 🎯 Quiz Mode
 - Multiple choice questions with smart wrong answers
 - Instant feedback with explanations
 - Real-time score tracking and accuracy metrics
 - Progressive difficulty and streak rewards
-
-#### 📚 Flashcards
-- Flip-card animations for interactive learning
-- Self-assessment with difficulty rating
-- Progress tracking through the deck
-- Separate sections for terms and acronyms
 
 #### 🎯 Jargon Bingo
 - Interactive 5x5 bingo grid
